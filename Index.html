@@ -385,7 +385,6 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
     <th class="c-own">Primary Owner</th>
     <th class="c-own">Secondary Owner</th>
     <th class="c-date ctr">Start Date</th>
-    <th class="c-date ctr">Due Date</th>
     <th class="c-date ctr">End Date</th>
     <th class="c-tat ctr">TAT</th>
     <th class="c-brief">Task Brief / Details</th>
@@ -503,7 +502,7 @@ function filter() {
 function render(tasks) {
   const tbody = document.getElementById('tbody');
   if (!tasks.length) {
-    tbody.innerHTML = `<tr><td colspan="15"><div class="empty">
+    tbody.innerHTML = `<tr><td colspan="14"><div class="empty">
       <div class="icon">📋</div><strong>No tasks found</strong><br>
       <span style="font-size:12px">Click <em>Add Task</em> or adjust your filters.</span>
     </div></td></tr>`;
@@ -527,8 +526,6 @@ function buildRow(t, display) {
     `<option value="${v}"${t.priority===v?' selected':''}>${v||'— Priority —'}</option>`).join('');
   const ownerOpts = sel => OWNERS.map(v =>
     `<option value="${v}"${v===sel?' selected':''}>${v||'— None —'}</option>`).join('');
-
-  const dueCls  = dueDateClass(t.dueDate);
 
   return `<tr data-ri="${ri}">
     <td class="rnum ctr">${t.num||display}</td>
@@ -569,10 +566,6 @@ function buildRow(t, display) {
     <td class="ctr">
       <input type="date" class="date-inp" value="${t.startDate}"
         data-field="startDate" onchange="onDateChange(this)">
-    </td>
-    <td class="ctr">
-      <input type="date" class="date-inp ${dueCls}" value="${t.dueDate}"
-        data-field="dueDate" onchange="onDateChange(this)">
     </td>
     <td class="ctr">
       <input type="date" class="date-inp" value="${t.endDate}"
@@ -625,8 +618,6 @@ function onSelectChange(el) {
 
 function onDateChange(el) {
   const tr  = el.closest('tr');
-  const due = tr.querySelector('[data-field="dueDate"]');
-  if (due) due.className = 'date-inp ' + dueDateClass(due.value);
   const s   = tr.querySelector('[data-field="startDate"]').value;
   const e   = tr.querySelector('[data-field="endDate"]').value;
   const tc  = tr.querySelector('[data-tat-cell]');
@@ -661,7 +652,6 @@ function saveRow(tr) {
     priOwner : get('priOwner'),
     secOwner : get('secOwner'),
     startDate: get('startDate'),
-    dueDate  : get('dueDate'),
     endDate  : get('endDate'),
     brief    : get('brief'),
     volume   : get('volume'),
@@ -688,7 +678,7 @@ function saveRow(tr) {
 // ── Add row ──────────────────────────────────────────────────────
 function addRow() {
   const blank = {rowIndex:null,num:'',status:'',owFn:'',task:'',
-    priOwner:'',secOwner:'',startDate:'',dueDate:'',endDate:'',
+    priOwner:'',secOwner:'',startDate:'',endDate:'',
     tat:'',brief:'',volume:'',blocker:'',priority:''};
   const tbody = document.getElementById('tbody');
   if (tbody.querySelector('.empty')) tbody.innerHTML = '';
@@ -756,15 +746,6 @@ function updateDot(wrap) {
 
 function initOf(n){ return OWN_INIT[n] || (n ? n[0].toUpperCase() : ''); }
 function dotCls(n){ return OWN_DOT[n]  || 'dot-X'; }
-
-function dueDateClass(d) {
-  if (!d) return '';
-  const today = new Date(); today.setHours(0,0,0,0);
-  const due = new Date(d);
-  if (due < today) return 'overdue';
-  if (Math.ceil((due-today)/86400000) <= 3) return 'warning';
-  return '';
-}
 
 function calcTAT(s, e) {
   if (!s) return '';

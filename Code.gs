@@ -14,13 +14,12 @@
  *   E  Primary Owner      Ajay | Harshita | Vamsi | Naveen | Vishwas
  *   F  Secondary Owner
  *   G  Start Date
- *   H  Due Date
- *   I  End Date
- *   J  TAT (Days)         Auto-calculated: End–Start or Today–Start (running)
- *   K  Task Brief / Details
- *   L  Volume
- *   M  Blocker
- *   N  Priority           High | Medium | Low
+ *   H  End Date
+ *   I  TAT (Days)         Auto-calculated: End–Start or Today–Start (running)
+ *   J  Task Brief / Details
+ *   K  Volume
+ *   L  Blocker
+ *   M  Priority           High | Medium | Low
  */
 
 const SS_ID   = '1nc7qCA-VsAO3_kW76PAwwdsyWWVf-0dtYdZfxeKYbtU';
@@ -28,7 +27,7 @@ const SH_NAME = 'Task Tracker';
 const HEADERS = [
   '#', 'Status', 'Owning Function', 'Task',
   'Primary Owner', 'Secondary Owner',
-  'Start Date', 'Due Date', 'End Date',
+  'Start Date', 'End Date',
   'TAT (Days)', 'Task Brief / Details', 'Volume',
   'Blocker', 'Priority'
 ];
@@ -63,8 +62,8 @@ function _buildSheet(ss) {
   hdr.setWrap(true);
   sh.setRowHeight(1, 48);
 
-  //                  #    Status  OwFn  Task  PriOwn SecOwn Start Due  End  TAT  Brief Vol  Blocker  Priority
-  const widths = [45, 120, 170,   240,  130,  130,   108,  108, 108,  90,  280,  80,  200,    100];
+  //                  #    Status  OwFn  Task  PriOwn SecOwn Start End  TAT  Brief Vol  Blocker  Priority
+  const widths = [45, 120, 170,   240,  130,  130,   108,  108,  90,  280,  80,  200,    100];
   widths.forEach((w, i) => sh.setColumnWidth(i + 1, w));
   sh.setFrozenRows(1);
   return sh;
@@ -92,13 +91,12 @@ function getTasks() {
         priOwner : r[4]  || '',
         secOwner : r[5]  || '',
         startDate: _fmt(r[6], tz),
-        dueDate  : _fmt(r[7], tz),
-        endDate  : _fmt(r[8], tz),
-        tat      : r[9]  || '',
-        brief    : r[10] || '',
-        volume   : r[11] || '',
-        blocker  : r[12] || '',
-        priority : r[13] || ''
+        endDate  : _fmt(r[7], tz),
+        tat      : r[8]  || '',
+        brief    : r[9]  || '',
+        volume   : r[10] || '',
+        blocker  : r[11] || '',
+        priority : r[12] || ''
       }));
 
   } catch (e) {
@@ -121,7 +119,6 @@ function saveTask(t) {
       t.priOwner  || '',
       t.secOwner  || '',
       t.startDate ? new Date(t.startDate) : '',
-      t.dueDate   ? new Date(t.dueDate)   : '',
       t.endDate   ? new Date(t.endDate)   : '',
       tat,
       t.brief     || '',
@@ -141,7 +138,7 @@ function saveTask(t) {
       targetRow = sh.getLastRow();
     }
 
-    ['G', 'H', 'I'].forEach(col => {
+    ['G', 'H'].forEach(col => {
       const c = sh.getRange(col + targetRow);
       if (c.getValue()) c.setNumberFormat('dd-mmm-yyyy');
     });
