@@ -79,27 +79,6 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 .met-high .met-val{color:#dc2626}
 .met-blk  .met-val{color:#7c3aed}
 
-/* progress row */
-.prog-row{margin:12px 28px 0;background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--r);padding:14px 22px;display:flex;align-items:center;gap:20px;
-  box-shadow:var(--shadow)}
-.prog-left{flex:1;min-width:0}
-.prog-label{display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:8px}
-.prog-label span{font-size:11px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.8px;color:var(--brand)}
-.prog-label strong{font-size:12px;font-weight:800;color:var(--text)}
-.prog-track{height:8px;border-radius:99px;background:#e9ecef;overflow:hidden}
-.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#f59e0b,#fcd34d);
-  transition:width .6s cubic-bezier(.4,0,.2,1);min-width:0}
-.prog-fill.full{background:linear-gradient(90deg,#059669,#34d399)}
-.prog-right{display:flex;align-items:center;gap:18px;flex-shrink:0}
-.dot-item{display:flex;align-items:center;gap:6px;font-size:11.5px;
-  color:var(--muted);white-space:nowrap}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.dot.done{background:#22c55e}.dot.inprog{background:#f59e0b}
-.dot.hold{background:#ef4444}.dot.notstart{background:#d1d5db}
-
 /* ── Member cards ────────────────────────────────────────── */
 .mem-section{padding:14px 28px 0}
 .sec-hdr{display:flex;align-items:center;gap:8px;margin-bottom:12px}
@@ -121,21 +100,19 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 .mc-name{font-size:13px;font-weight:700;color:var(--text);flex:1}
 .mc-count{font-size:10px;font-weight:700;background:var(--bg);color:var(--muted);
   padding:2px 8px;border-radius:99px;white-space:nowrap;border:1px solid var(--border)}
-.mc-body{padding:10px 12px;display:flex;flex-direction:column;gap:6px;
-  max-height:200px;overflow-y:auto;flex:1;
-  scrollbar-width:thin;scrollbar-color:#e2e8f0 transparent}
-.mc-task{display:flex;align-items:flex-start;gap:7px;padding:4px 0;
-  border-bottom:1px solid #f8fafc}
-.mc-task:last-child{border-bottom:none}
-.mc-stat{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:99px;
-  white-space:nowrap;flex-shrink:0;border:1.5px solid transparent;margin-top:1px}
-.mc-stat.s-ns  {background:#f1f5f9;border-color:#cbd5e1;color:#64748b}
-.mc-stat.s-ip  {background:#fef3c7;border-color:#fcd34d;color:#92400e}
-.mc-stat.s-done{background:#dcfce7;border-color:#86efac;color:#166534}
-.mc-stat.s-hold{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
-.mc-tname{font-size:11.5px;color:#334155;line-height:1.4}
-.mc-empty{font-size:11.5px;color:var(--faint);text-align:center;
-  padding:12px 0;font-style:italic}
+.mc-body{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+.mc-stat-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:10px 8px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:3px;text-align:center}
+.mc-stat-val{font-size:22px;font-weight:800;color:var(--text);line-height:1}
+.mc-stat-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.6px;white-space:nowrap}
+.mc-stat-box.done .mc-stat-val{color:#166534}
+.mc-stat-box.done{background:#dcfce7;border-color:#86efac}
+.mc-stat-box.prog .mc-stat-val{color:#92400e}
+.mc-stat-box.prog{background:#fef3c7;border-color:#fcd34d}
+.mc-stat-box.hold .mc-stat-val{color:#991b1b}
+.mc-stat-box.hold{background:#fee2e2;border-color:#fca5a5}
 
 /* ── Toolbar ─────────────────────────────────────────────── */
 .toolbar{display:flex;align-items:center;justify-content:space-between;
@@ -458,24 +435,6 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 </div>
 
 <!-- Progress bar row -->
-<div class="prog-row">
-  <div class="prog-left">
-    <div class="prog-label">
-      <span>Completion Progress</span>
-      <strong><span id="ov-tot2">0</span> tasks · <span id="ov-fn">0</span> functions · <span id="ov-mem">0</span> members</strong>
-    </div>
-    <div class="prog-track">
-      <div class="prog-fill" id="ov-bar" style="width:0%"></div>
-    </div>
-  </div>
-  <div class="prog-right">
-    <span class="dot-item"><span class="dot done"></span><span id="ov-done2">0</span> Completed</span>
-    <span class="dot-item"><span class="dot inprog"></span><span id="ov-prog2">0</span> In Progress</span>
-    <span class="dot-item"><span class="dot hold"></span><span id="ov-hold2">0</span> On Hold</span>
-    <span class="dot-item"><span class="dot notstart"></span><span id="ov-ns">0</span> Not Started</span>
-  </div>
-</div>
-
 <!-- Member cards -->
 <div class="mem-section">
   <div class="sec-hdr">
@@ -624,18 +583,12 @@ function updateStats(tasks) {
   const fns   = new Set(tasks.map(t=>t.owFn).filter(Boolean)).size;
   const mems  = new Set([...tasks.map(t=>t.priOwner),...tasks.map(t=>t.secOwner)].filter(Boolean)).size;
 
-  set('ov-tot',  tot);  set('ov-tot2', tot);
-  set('ov-done', done); set('ov-done2', done);
-  set('ov-prog', inPrg);set('ov-prog2', inPrg);
-  set('ov-hold', hold); set('ov-hold2', hold);
-  set('ov-ns',   notSt);
-  set('ov-high', high); set('ov-blk',  blk);
-  set('ov-fn',   fns);  set('ov-mem',  mems);
+  set('ov-tot',  tot);
+  set('ov-done', done);
+  set('ov-prog', inPrg);
+  set('ov-hold', hold);
+  set('ov-high', high); set('ov-blk', blk);
   set('ov-pct-label', pct + '% completion rate');
-
-  const bar = document.getElementById('ov-bar');
-  bar.style.width = pct + '%';
-  bar.classList.toggle('full', pct === 100);
 }
 
 // ── Member cards ─────────────────────────────────────────────────
@@ -647,22 +600,37 @@ function renderMemberCards(tasks) {
   const wrap = document.getElementById('mem-cards');
   if (!wrap) return;
   wrap.innerHTML = MEMBERS.map(name => {
-    const mine = tasks.filter(t => t.priOwner === name || t.secOwner === name);
-    const bg   = MC_COLOR[name] || '#94a3b8';
-    const init = OWN_INIT[name] || name[0].toUpperCase();
-    const body = mine.length
-      ? mine.map(t => `<div class="mc-task">
-          <span class="mc-stat ${STAT_CLS[t.status]||'s-ns'}">${t.status||'Not Started'}</span>
-          <span class="mc-tname">${esc(t.task||'—')}</span>
-        </div>`).join('')
-      : '<div class="mc-empty">No tasks assigned</div>';
+    const mine  = tasks.filter(t => t.priOwner === name || t.secOwner === name);
+    const bg    = MC_COLOR[name] || '#94a3b8';
+    const init  = OWN_INIT[name] || name[0].toUpperCase();
+    const total = mine.length;
+    const done  = mine.filter(t => t.status === 'Completed').length;
+    const prog  = mine.filter(t => t.status === 'In Progress').length;
+    const hold  = mine.filter(t => t.status === 'On Hold').length;
     return `<div class="mem-card">
       <div class="mc-hdr">
         <div class="mc-avatar" style="background:${bg}">${init}</div>
         <span class="mc-name">${name}</span>
-        <span class="mc-count">${mine.length} task${mine.length!==1?'s':''}</span>
+        <span class="mc-count">${total} task${total!==1?'s':''}</span>
       </div>
-      <div class="mc-body">${body}</div>
+      <div class="mc-body">
+        <div class="mc-stat-box">
+          <span class="mc-stat-val">${total}</span>
+          <span class="mc-stat-lbl">Total Tasks</span>
+        </div>
+        <div class="mc-stat-box done">
+          <span class="mc-stat-val">${done}</span>
+          <span class="mc-stat-lbl">Completed</span>
+        </div>
+        <div class="mc-stat-box prog">
+          <span class="mc-stat-val">${prog}</span>
+          <span class="mc-stat-lbl">In Progress</span>
+        </div>
+        <div class="mc-stat-box hold">
+          <span class="mc-stat-val">${hold}</span>
+          <span class="mc-stat-lbl">On Hold</span>
+        </div>
+      </div>
     </div>`;
   }).join('');
 }
