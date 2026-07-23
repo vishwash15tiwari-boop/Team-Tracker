@@ -147,17 +147,19 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .pill-sel.p-low {background-color:#f0fdf4;border-color:#86efac;color:#166534}
 .pill-sel.p-none{background-color:#f8fafc;border-color:#e2e8f0;color:#94a3b8}
 
-/* ── Owning-function select ──────────────────────────────── */
-.fn-sel{
-  -webkit-appearance:none;appearance:none;
-  padding:5px 22px 5px 10px;border-radius:20px;font-size:12px;
+/* ── Owning-function combo (datalist) ────────────────────── */
+.fn-combo{
+  padding:5px 10px;border-radius:20px;font-size:12px;
   border:1.5px solid #e2e8f0;background-color:#f8fafc;color:#334155;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0z' fill='%2394a3b8'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 7px center;
-  background-size:9px;cursor:pointer;width:100%;outline:none;font-family:inherit}
-.fn-sel:hover{border-color:#6366f1;background-color:#eff6ff}
-.fn-sel:focus{border-color:#6366f1;background-color:#fff;
+  width:100%;outline:none;font-family:inherit}
+.fn-combo:hover{border-color:#6366f1;background-color:#eff6ff}
+.fn-combo:focus{border-color:#6366f1;background-color:#fff;
   box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+/* filter bar combo — matches .fsel height but no custom arrow */
+.fsel-combo{border:1px solid #d1d9e8;border-radius:7px;
+  padding:7px 10px;font-size:12px;background:#fff;outline:none;
+  color:#1e2535;min-width:140px}
+.fsel-combo:focus{border-color:#6366f1}
 
 /* ── Owner select ────────────────────────────────────────── */
 .own-sel{
@@ -289,6 +291,21 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 </head>
 <body>
 
+<!-- Shared function datalist -->
+<datalist id="fn-list">
+  <option>Marketplace</option>
+  <option>Open Marketplace</option>
+  <option>EPR &amp; Sustainability</option>
+  <option>SOPs / MIS / Tracker</option>
+  <option>Onboarding</option>
+  <option>Admin</option>
+  <option>Automation</option>
+  <option>Marketing</option>
+  <option>SOP</option>
+  <option>MIS</option>
+  <option>3rd Party</option>
+</datalist>
+
 <!-- Loading -->
 <div id="overlay">
   <div class="spin-lg"></div>
@@ -373,20 +390,8 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
       <option>Ajay</option><option>Harshita</option>
       <option>Vamsi</option><option>Naveen</option><option>Vishwas</option>
     </select>
-    <select class="fsel" id="fFn" onchange="filter()">
-      <option value="">All Functions</option>
-      <option>Marketplace</option>
-      <option>Open Marketplace</option>
-      <option>EPR &amp; Sustainability</option>
-      <option>SOPs / MIS / Tracker</option>
-      <option>Onboarding</option>
-      <option>Admin</option>
-      <option>Automation</option>
-      <option>Marketing</option>
-      <option>SOP</option>
-      <option>MIS</option>
-      <option>3rd Party</option>
-    </select>
+    <input type="text" list="fn-list" class="fsel fsel-combo" id="fFn"
+      oninput="filter()" placeholder="All Functions">
     <div class="tl-sep"></div>
     <div class="date-range">
       <span class="dr-lbl">📅</span>
@@ -523,7 +528,7 @@ function filter() {
     const ms = !fs || t.status   === fs;
     const mp = !fp || t.priority === fp;
     const mo = !fo || t.priOwner === fo || t.secOwner === fo;
-    const mf = !ff || t.owFn     === ff;
+    const mf = !ff || (t.owFn||'').toLowerCase().includes(ff.toLowerCase());
     const md = (!fdFrom || (t.startDate && t.startDate >= fdFrom)) &&
                (!fdTo   || (t.startDate && t.startDate <= fdTo));
     return mq && ms && mp && mo && mf && md;
@@ -585,8 +590,6 @@ function buildRow(t, display) {
 
   const statOpts = STATUSES.map(v =>
     `<option value="${v}"${t.status===v?' selected':''}>${v||'— Status —'}</option>`).join('');
-  const fnOpts = FNS.map(v =>
-    `<option value="${v}"${t.owFn===v?' selected':''}>${v||'— Function —'}</option>`).join('');
   const priOpts = PRIS.map(v =>
     `<option value="${v}"${t.priority===v?' selected':''}>${v||'— Priority —'}</option>`).join('');
   const ownerOpts = sel => OWNERS.map(v =>
@@ -601,9 +604,9 @@ function buildRow(t, display) {
       </select>
     </td>
     <td>
-      <select class="fn-sel" data-field="owFn" onchange="onSelectChange(this)">
-        ${fnOpts}
-      </select>
+      <input type="text" list="fn-list" class="fn-combo" data-field="owFn"
+        value="${esc(t.owFn)}" placeholder="— Function —"
+        oninput="debounce(this)" onblur="onBlur(this)">
     </td>
     <td>
       <input type="text" class="task-inp" placeholder="Enter task…"
