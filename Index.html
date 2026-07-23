@@ -29,16 +29,48 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   transition:all .18s}
 #syncBtn:hover{background:#1e3254;color:#e2e8f0}
 
-/* ── Stats ───────────────────────────────────────────────── */
-.stats{display:flex;gap:12px;padding:16px 28px 0;flex-wrap:wrap}
-.sc{background:#fff;border-radius:10px;padding:13px 18px;flex:1;min-width:110px;
-  box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #e8ecf4}
-.sc .lbl{font-size:10px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.6px;color:#64748b;margin-bottom:4px}
-.sc .val{font-size:24px;font-weight:800;line-height:1;color:#1e2535}
-.sc .sub{font-size:10px;color:#94a3b8;margin-top:2px}
-.sc.r1 .val{color:#16a34a} .sc.r2 .val{color:#d97706}
-.sc.r3 .val{color:#ea580c} .sc.r4 .val{color:#dc2626}
+/* ── Overview strip ──────────────────────────────────────── */
+.ov-strip{
+  margin:16px 28px 0;background:#fff;border:1px solid #e4e9f2;
+  border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.06);
+  display:flex;align-items:stretch;overflow:hidden
+}
+.ov-left{
+  flex:1;padding:16px 24px;border-right:1px solid #e4e9f2;min-width:0
+}
+.ov-title{
+  font-size:10px;font-weight:800;letter-spacing:1.2px;
+  text-transform:uppercase;color:#059669;margin-bottom:10px
+}
+.ov-row{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:8px
+}
+.ov-row .lbl{font-size:10px;font-weight:600;letter-spacing:.6px;
+  text-transform:uppercase;color:#94a3b8}
+.ov-total{font-size:13px;font-weight:800;color:#1e2535;white-space:nowrap}
+/* progress bar */
+.prog-track{height:10px;border-radius:99px;background:#e9ecef;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;border-radius:99px;background:#f59e0b;
+  transition:width .5s ease;min-width:0}
+.prog-fill.full{background:#22c55e}
+/* status dots */
+.dot-row{display:flex;align-items:center;gap:16px}
+.dot-item{display:flex;align-items:center;gap:5px;
+  font-size:11px;color:#475569;white-space:nowrap}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.dot.done{background:#22c55e}
+.dot.inprog{background:#f59e0b}
+.dot.notstart{background:#d1d5db}
+/* right metrics */
+.ov-metrics{display:flex;align-items:stretch}
+.ov-met{
+  padding:14px 28px;display:flex;flex-direction:column;
+  justify-content:center;border-right:1px solid #e4e9f2;min-width:130px
+}
+.ov-met:last-child{border-right:none}
+.ov-met .ml{font-size:9.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.9px;color:#94a3b8;margin-bottom:5px}
+.ov-met .mv{font-size:26px;font-weight:800;color:#1e2535;line-height:1}
 
 /* ── Toolbar ─────────────────────────────────────────────── */
 .toolbar{display:flex;align-items:center;justify-content:space-between;
@@ -290,32 +322,38 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   </div>
 </header>
 
-<!-- Stats -->
-<div class="stats">
-  <div class="sc">
-    <div class="lbl">Total Tasks</div>
-    <div class="val" id="s-tot">0</div>
-    <div class="sub">all active</div>
+<!-- Overview strip -->
+<div class="ov-strip">
+  <!-- left: progress -->
+  <div class="ov-left">
+    <div class="ov-title">Task Overview</div>
+    <div class="ov-row">
+      <span class="lbl">Completion Status</span>
+      <span class="ov-total"><span id="ov-tot">0</span> Tasks</span>
+    </div>
+    <div class="prog-track">
+      <div class="prog-fill" id="ov-bar" style="width:0%"></div>
+    </div>
+    <div class="dot-row">
+      <span class="dot-item"><span class="dot done"></span><span id="ov-done">0</span> Completed</span>
+      <span class="dot-item"><span class="dot inprog"></span><span id="ov-prog">0</span> In Progress</span>
+      <span class="dot-item"><span class="dot notstart"></span><span id="ov-ns">0</span> Not Started</span>
+    </div>
   </div>
-  <div class="sc r1">
-    <div class="lbl">Rank 1</div>
-    <div class="val" id="s-r1">0</div>
-    <div class="sub">critical</div>
-  </div>
-  <div class="sc r2">
-    <div class="lbl">Rank 2</div>
-    <div class="val" id="s-r2">0</div>
-    <div class="sub">high</div>
-  </div>
-  <div class="sc r3">
-    <div class="lbl">Rank 3</div>
-    <div class="val" id="s-r3">0</div>
-    <div class="sub">medium</div>
-  </div>
-  <div class="sc r4">
-    <div class="lbl">Rank 4</div>
-    <div class="val" id="s-r4">0</div>
-    <div class="sub">low</div>
+  <!-- right: 3 metrics -->
+  <div class="ov-metrics">
+    <div class="ov-met">
+      <div class="ml">Rank 1 Tasks</div>
+      <div class="mv" id="ov-r1">0</div>
+    </div>
+    <div class="ov-met">
+      <div class="ml">Functions Covered</div>
+      <div class="mv" id="ov-fn">0</div>
+    </div>
+    <div class="ov-met">
+      <div class="ml">Members Active</div>
+      <div class="mv" id="ov-mem">0</div>
+    </div>
   </div>
 </div>
 
@@ -435,13 +473,31 @@ function onLoad(data) {
     'Last synced: ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
 }
 
-// ── Stats ────────────────────────────────────────────────────────
+// ── Overview strip ────────────────────────────────────────────────
 function updateStats(tasks) {
-  document.getElementById('s-tot').textContent = tasks.length;
-  [1,2,3,4].forEach(r =>
-    document.getElementById('s-r'+r).textContent =
-      tasks.filter(t => String(t.rank) === String(r)).length
-  );
+  const tot   = tasks.length;
+  const done  = tasks.filter(t => t.endDate).length;
+  const inPrg = tasks.filter(t => t.startDate && !t.endDate).length;
+  const notSt = tasks.filter(t => !t.startDate).length;
+  const pct   = tot ? Math.round((done / tot) * 100) : 0;
+  const fns   = new Set(tasks.map(t => t.owFn).filter(Boolean)).size;
+  const mems  = new Set([
+    ...tasks.map(t => t.priOwner),
+    ...tasks.map(t => t.secOwner)
+  ].filter(Boolean)).size;
+  const r1    = tasks.filter(t => String(t.rank) === '1').length;
+
+  document.getElementById('ov-tot').textContent  = tot;
+  document.getElementById('ov-done').textContent = done;
+  document.getElementById('ov-prog').textContent = inPrg;
+  document.getElementById('ov-ns').textContent   = notSt;
+  document.getElementById('ov-r1').textContent   = r1;
+  document.getElementById('ov-fn').textContent   = fns;
+  document.getElementById('ov-mem').textContent  = mems;
+
+  const bar = document.getElementById('ov-bar');
+  bar.style.width = pct + '%';
+  bar.classList.toggle('full', pct === 100);
 }
 
 // ── Filter + render ──────────────────────────────────────────────
