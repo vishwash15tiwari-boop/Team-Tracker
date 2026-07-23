@@ -1,21 +1,22 @@
 /**
- * Onboarding Team — Task Tracker
- * Google Apps Script Web App
+ * Onboarding Team — Task Tracker  (Google Apps Script)
  *
- * Sheet ID : 1nc7qCA-VsAO3_kW76PAwwdsyWWVf-0dtYdZfxeKYbtU
- * Sheet tab : "Task Tracker"
+ * Team  : Ajay (Manager) | Harshita | Vamsi | Naveen | Vishwas
+ * Sheet : 1nc7qCA-VsAO3_kW76PAwwdsyWWVf-0dtYdZfxeKYbtU → "Task Tracker" tab
  *
- * Columns (A–L)
- *   A  #                   Auto-numbered
- *   B  Rank                1 | 2 | 3 | 4
- *   C  Owning Function
+ * Columns A–L
+ *   A  #                  Auto-numbered
+ *   B  Rank               1 | 2 | 3 | 4
+ *   C  Owning Function    Marketplace | Open Marketplace | EPR & Sustainability |
+ *                         SOPs / MIS / Tracker | Onboarding | Admin |
+ *                         Automation | Marketing | SOP | MIS | 3rd Party
  *   D  Task
- *   E  Primary Owner
+ *   E  Primary Owner      Ajay | Harshita | Vamsi | Naveen | Vishwas
  *   F  Secondary Owner
  *   G  Start Date
  *   H  Due Date
  *   I  End Date
- *   J  TAT (Days)          Auto-calculated server-side
+ *   J  TAT (Days)         Auto-calculated: End–Start or Today–Start (running)
  *   K  Task Brief / Details
  *   L  Volume
  */
@@ -29,16 +30,14 @@ const HEADERS = [
   'TAT (Days)', 'Task Brief / Details', 'Volume'
 ];
 
-// ─── Entry point ─────────────────────────────────────────────────────────────
-
+// ── Entry point ──────────────────────────────────────────────────────────────
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('Index')
     .setTitle('Onboarding Team — Task Tracker')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-// ─── Sheet bootstrap ─────────────────────────────────────────────────────────
-
+// ── Sheet bootstrap ──────────────────────────────────────────────────────────
 function getSheet() {
   const ss = SpreadsheetApp.openById(SS_ID);
   let sh = ss.getSheetByName(SH_NAME);
@@ -49,55 +48,51 @@ function getSheet() {
 function _buildSheet(ss) {
   const sh = ss.insertSheet(SH_NAME, 0);
 
-  // Header row
-  const hdrRange = sh.getRange(1, 1, 1, HEADERS.length);
-  hdrRange.setValues([HEADERS]);
-  hdrRange.setBackground('#16213e');
-  hdrRange.setFontColor('#ffffff');
-  hdrRange.setFontWeight('bold');
-  hdrRange.setFontFamily('Arial');
-  hdrRange.setFontSize(10);
-  hdrRange.setHorizontalAlignment('center');
-  hdrRange.setVerticalAlignment('middle');
-  hdrRange.setWrap(true);
+  const hdr = sh.getRange(1, 1, 1, HEADERS.length);
+  hdr.setValues([HEADERS]);
+  hdr.setBackground('#16213e');
+  hdr.setFontColor('#ffffff');
+  hdr.setFontWeight('bold');
+  hdr.setFontFamily('Arial');
+  hdr.setFontSize(10);
+  hdr.setHorizontalAlignment('center');
+  hdr.setVerticalAlignment('middle');
+  hdr.setWrap(true);
   sh.setRowHeight(1, 48);
 
-  // Column widths
-  const widths = [45, 70, 165, 235, 130, 130, 108, 108, 108, 90, 290, 85];
+  const widths = [45, 70, 175, 240, 130, 130, 108, 108, 108, 90, 290, 85];
   widths.forEach((w, i) => sh.setColumnWidth(i + 1, w));
-
   sh.setFrozenRows(1);
   return sh;
 }
 
-// ─── Public API ───────────────────────────────────────────────────────────────
+// ── Public API ───────────────────────────────────────────────────────────────
 
-/** Return all task rows as JSON-safe objects. */
 function getTasks() {
   try {
-    const sh = getSheet();
-    const lr = sh.getLastRow();
+    const sh  = getSheet();
+    const lr  = sh.getLastRow();
     if (lr < 2) return [];
 
     const tz   = Session.getScriptTimeZone();
     const vals = sh.getRange(2, 1, lr - 1, HEADERS.length).getValues();
 
     return vals
-      .filter(r => r[3] || r[2])   // skip completely blank rows
+      .filter(r => r[3] || r[2])
       .map((r, i) => ({
         rowIndex : i + 2,
         num      : r[0],
-        rank     : String(r[1]),
-        owFn     : r[2],
-        task     : r[3],
-        priOwner : r[4],
-        secOwner : r[5],
-        startDate: _fmtDate(r[6], tz),
-        dueDate  : _fmtDate(r[7], tz),
-        endDate  : _fmtDate(r[8], tz),
-        tat      : r[9],
-        brief    : r[10],
-        volume   : r[11]
+        rank     : String(r[1] || ''),
+        owFn     : r[2]  || '',
+        task     : r[3]  || '',
+        priOwner : r[4]  || '',
+        secOwner : r[5]  || '',
+        startDate: _fmt(r[6], tz),
+        dueDate  : _fmt(r[7], tz),
+        endDate  : _fmt(r[8], tz),
+        tat      : r[9]  || '',
+        brief    : r[10] || '',
+        volume   : r[11] || ''
       }));
 
   } catch (e) {
@@ -105,81 +100,75 @@ function getTasks() {
   }
 }
 
-/** Insert or update a task row. */
+/** Insert (rowIndex falsy) or update (rowIndex ≥ 2) a task row.
+ *  Returns { success, rowIndex } so the client can track new rows. */
 function saveTask(t) {
   try {
     const sh  = getSheet();
-    const tat = _calcTAT(t.startDate, t.endDate);
+    const tat = _tat(t.startDate, t.endDate);
 
     const row = [
-      t.num      != null ? t.num : '',
-      t.rank       || '',
-      t.owFn       || '',
-      t.task       || '',
-      t.priOwner   || '',
-      t.secOwner   || '',
-      t.startDate  ? new Date(t.startDate) : '',
-      t.dueDate    ? new Date(t.dueDate)   : '',
-      t.endDate    ? new Date(t.endDate)   : '',
+      t.num != null ? t.num : '',
+      t.rank      || '',
+      t.owFn      || '',
+      t.task      || '',
+      t.priOwner  || '',
+      t.secOwner  || '',
+      t.startDate ? new Date(t.startDate) : '',
+      t.dueDate   ? new Date(t.dueDate)   : '',
+      t.endDate   ? new Date(t.endDate)   : '',
       tat,
-      t.brief      || '',
-      t.volume     || ''
+      t.brief     || '',
+      t.volume    || ''
     ];
 
     let targetRow;
 
     if (t.rowIndex && t.rowIndex >= 2) {
-      // ── Update existing ─────────────────────────────────────────
       sh.getRange(t.rowIndex, 1, 1, HEADERS.length).setValues([row]);
       targetRow = t.rowIndex;
     } else {
-      // ── Append new row ──────────────────────────────────────────
-      const newNum = Math.max(sh.getLastRow(), 1);  // 1-based task #
-      row[0] = newNum;
+      const lr = sh.getLastRow();
+      row[0] = Math.max(lr, 1);   // auto-number
       sh.appendRow(row);
       targetRow = sh.getLastRow();
     }
 
-    // Date number-format
+    // Date format
     ['G', 'H', 'I'].forEach(col => {
       const c = sh.getRange(col + targetRow);
       if (c.getValue()) c.setNumberFormat('dd-mmm-yyyy');
     });
 
-    _styleDataRows(sh);
-    return { success: true };
+    _styleRows(sh);
+    return { success: true, rowIndex: targetRow };
 
   } catch (e) {
     return { error: e.toString() };
   }
 }
 
-/** Delete a row by its 1-based sheet row index and renumber. */
 function deleteTask(rowIndex) {
   try {
     const sh = getSheet();
     sh.deleteRow(rowIndex);
     _renumber(sh);
-    _styleDataRows(sh);
+    _styleRows(sh);
     return { success: true };
   } catch (e) {
     return { error: e.toString() };
   }
 }
 
-// ─── Private helpers ──────────────────────────────────────────────────────────
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
-function _fmtDate(val, tz) {
+function _fmt(val, tz) {
   if (!val || val === '') return '';
-  try {
-    return Utilities.formatDate(new Date(val), tz, 'yyyy-MM-dd');
-  } catch (_) {
-    return String(val);
-  }
+  try { return Utilities.formatDate(new Date(val), tz, 'yyyy-MM-dd'); }
+  catch (_) { return String(val); }
 }
 
-/** Days between start and end (or today if end is blank). */
-function _calcTAT(startStr, endStr) {
+function _tat(startStr, endStr) {
   if (!startStr) return '';
   const s    = new Date(startStr);
   const e    = endStr ? new Date(endStr) : new Date();
@@ -193,23 +182,16 @@ function _renumber(sh) {
   for (let r = 2; r <= lr; r++) sh.getRange(r, 1).setValue(r - 1);
 }
 
-function _styleDataRows(sh) {
+function _styleRows(sh) {
   const lr = sh.getLastRow();
   if (lr < 2) return;
-
   for (let r = 2; r <= lr; r++) {
     const rng = sh.getRange(r, 1, 1, HEADERS.length);
     rng.setBackground(r % 2 === 0 ? '#ffffff' : '#f7f8fc');
-    rng.setFontFamily('Arial');
-    rng.setFontSize(10);
-    rng.setVerticalAlignment('middle');
+    rng.setFontFamily('Arial').setFontSize(10).setVerticalAlignment('middle');
     sh.setRowHeight(r, 40);
   }
-
   sh.getRange(2, 1, lr - 1, HEADERS.length)
-    .setBorder(
-      true, true, true, true, true, true,
-      '#dde1ea',
-      SpreadsheetApp.BorderStyle.SOLID
-    );
+    .setBorder(true, true, true, true, true, true,
+               '#dde1ea', SpreadsheetApp.BorderStyle.SOLID);
 }
