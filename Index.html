@@ -57,6 +57,34 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   letter-spacing:.9px;color:#94a3b8;margin-bottom:5px}
 .ov-met .mv{font-size:26px;font-weight:800;color:#1e2535;line-height:1}
 
+/* ── Member cards ────────────────────────────────────────── */
+.mem-section{margin:14px 28px 0}
+.mem-sec-lbl{font-size:10px;font-weight:800;letter-spacing:1.2px;
+  text-transform:uppercase;color:#059669;margin-bottom:10px}
+.mem-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:1200px){.mem-cards{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px) {.mem-cards{grid-template-columns:repeat(2,1fr)}}
+.mem-card{background:#fff;border:1px solid #e4e9f2;border-radius:12px;
+  box-shadow:0 1px 6px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column}
+.mc-hdr{display:flex;align-items:center;gap:9px;padding:11px 14px;
+  border-bottom:1px solid #f1f5f9}
+.mc-avatar{width:28px;height:28px;border-radius:50%;font-size:11px;font-weight:800;
+  color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mc-name{font-size:13px;font-weight:700;color:#1e2535;flex:1}
+.mc-count{font-size:11px;font-weight:700;background:#f1f5f9;color:#64748b;
+  padding:2px 8px;border-radius:99px;white-space:nowrap}
+.mc-body{padding:10px 12px;display:flex;flex-direction:column;gap:7px;
+  max-height:210px;overflow-y:auto}
+.mc-task{display:flex;align-items:flex-start;gap:7px}
+.mc-stat{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;
+  white-space:nowrap;flex-shrink:0;border:1.5px solid transparent}
+.mc-stat.s-ns  {background:#f1f5f9;border-color:#cbd5e1;color:#64748b}
+.mc-stat.s-ip  {background:#fef3c7;border-color:#fcd34d;color:#92400e}
+.mc-stat.s-done{background:#dcfce7;border-color:#86efac;color:#166534}
+.mc-stat.s-hold{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.mc-tname{font-size:12px;color:#334155;line-height:1.4}
+.mc-empty{font-size:12px;color:#94a3b8;text-align:center;padding:6px 0}
+
 /* ── Toolbar ─────────────────────────────────────────────── */
 .toolbar{display:flex;align-items:center;justify-content:space-between;
   padding:14px 28px;gap:10px;flex-wrap:wrap}
@@ -364,6 +392,12 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   </div>
 </div>
 
+<!-- Member cards -->
+<div class="mem-section">
+  <div class="mem-sec-lbl">Team Members</div>
+  <div class="mem-cards" id="mem-cards"></div>
+</div>
+
 <!-- Toolbar -->
 <div class="toolbar">
   <div class="tl">
@@ -484,6 +518,7 @@ function onLoad(data) {
   allTasks     = Array.isArray(data) ? data : [];
   visibleTasks = allTasks.slice();
   updateStats(allTasks);
+  renderMemberCards(allTasks);
   filter();
   document.getElementById('syncLabel').textContent =
     'Last synced: ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
@@ -510,6 +545,35 @@ function updateStats(tasks) {
   const bar = document.getElementById('ov-bar');
   bar.style.width = pct + '%';
   bar.classList.toggle('full', pct === 100);
+}
+
+// ── Member cards ─────────────────────────────────────────────────
+const MEMBERS  = ['Harshita','Vamsi','Naveen','Vishwas','Ajay'];
+const MC_COLOR = {Ajay:'#ec4899',Harshita:'#6366f1',Vamsi:'#06b6d4',
+                  Naveen:'#10b981',Vishwas:'#f59e0b'};
+
+function renderMemberCards(tasks) {
+  const wrap = document.getElementById('mem-cards');
+  if (!wrap) return;
+  wrap.innerHTML = MEMBERS.map(name => {
+    const mine = tasks.filter(t => t.priOwner === name || t.secOwner === name);
+    const bg   = MC_COLOR[name] || '#94a3b8';
+    const init = OWN_INIT[name] || name[0].toUpperCase();
+    const body = mine.length
+      ? mine.map(t => `<div class="mc-task">
+          <span class="mc-stat ${STAT_CLS[t.status]||'s-ns'}">${t.status||'Not Started'}</span>
+          <span class="mc-tname">${esc(t.task||'—')}</span>
+        </div>`).join('')
+      : '<div class="mc-empty">No tasks assigned</div>';
+    return `<div class="mem-card">
+      <div class="mc-hdr">
+        <div class="mc-avatar" style="background:${bg}">${init}</div>
+        <span class="mc-name">${name}</span>
+        <span class="mc-count">${mine.length} task${mine.length!==1?'s':''}</span>
+      </div>
+      <div class="mc-body">${body}</div>
+    </div>`;
+  }).join('');
 }
 
 // ── Filter ───────────────────────────────────────────────────────
@@ -681,7 +745,7 @@ function onPillChange(sel, field) {
   if (field === 'status')   updateStatusStyle(sel);
   if (field === 'priority') updatePriStyle(sel);
   saveRow(sel.closest('tr'));
-  if (field === 'status') updateStats(allTasks); // live strip update
+  if (field === 'status') { updateStats(allTasks); renderMemberCards(allTasks); }
 }
 
 function onSelectChange(el) {
@@ -741,6 +805,7 @@ function saveRow(tr) {
         tr.dataset.ri = res.rowIndex;
         allTasks.push({rowIndex:res.rowIndex, ...payload});
         updateStats(allTasks);
+        renderMemberCards(allTasks);
       }
       toast('Saved ✓','ok');
     })
@@ -784,6 +849,7 @@ function confirmDel(btn) {
         tr.remove();
         allTasks = allTasks.filter(t => t.rowIndex !== ri);
         updateStats(allTasks);
+        renderMemberCards(allTasks);
         renumberDisplay();
         toast('Deleted.','ok');
       })
