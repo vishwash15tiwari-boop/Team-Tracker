@@ -117,6 +117,7 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .c-num{width:44px}.c-status{width:128px}.c-owfn{width:165px}
 .c-task{min-width:200px}.c-own{width:135px}.c-date{width:110px}
 .c-tat{width:108px;text-align:center}.c-brief{min-width:180px}
+.c-impact{min-width:200px}
 .c-vol{width:72px;text-align:center}.c-blocker{min-width:160px}
 .c-pri{width:108px}.c-act{width:54px;text-align:center}
 
@@ -414,6 +415,7 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
     <th class="c-date ctr">End Date</th>
     <th class="c-tat ctr">TAT</th>
     <th class="c-brief">Task Brief / Details</th>
+    <th class="c-impact">Impact (Description)</th>
     <th class="c-vol ctr">Volume</th>
     <th class="c-blocker">Blocker</th>
     <th class="c-pri">Priority</th>
@@ -536,13 +538,13 @@ function downloadCSV() {
 
   const hdrs = ['#','Status','Owning Function','Task','Primary Owner',
     'Secondary Owner','Start Date','End Date','TAT (Days)',
-    'Task Brief / Details','Volume','Blocker','Priority'];
+    'Task Brief / Details','Impact (Description)','Volume','Blocker','Priority'];
 
   const esc2 = v => '"' + String(v||'').replace(/"/g,'""') + '"';
 
   const rows = visibleTasks.map(t =>
     [t.num,t.status,t.owFn,t.task,t.priOwner,t.secOwner,
-     t.startDate,t.endDate,t.tat,t.brief,t.volume,t.blocker,t.priority
+     t.startDate,t.endDate,t.tat,t.brief,t.impact,t.volume,t.blocker,t.priority
     ].map(esc2).join(',')
   );
 
@@ -565,7 +567,7 @@ function downloadCSV() {
 function render(tasks) {
   const tbody = document.getElementById('tbody');
   if (!tasks.length) {
-    tbody.innerHTML = `<tr><td colspan="14"><div class="empty">
+    tbody.innerHTML = `<tr><td colspan="15"><div class="empty">
       <div class="icon">📋</div><strong>No tasks found</strong><br>
       <span style="font-size:12px">Click <em>Add Task</em> or adjust your filters.</span>
     </div></td></tr>`;
@@ -638,6 +640,11 @@ function buildRow(t, display) {
     <td>
       <input type="text" class="brief-inp" placeholder="Add details…"
         value="${esc(t.brief)}" data-field="brief"
+        oninput="debounce(this)" onblur="onBlur(this)">
+    </td>
+    <td>
+      <input type="text" class="brief-inp" placeholder="Describe impact…"
+        value="${esc(t.impact)}" data-field="impact"
         oninput="debounce(this)" onblur="onBlur(this)">
     </td>
     <td class="ctr">
@@ -717,6 +724,7 @@ function saveRow(tr) {
     startDate: get('startDate'),
     endDate  : get('endDate'),
     brief    : get('brief'),
+    impact   : get('impact'),
     volume   : get('volume'),
     blocker  : get('blocker'),
     priority : get('priority')
@@ -742,7 +750,7 @@ function saveRow(tr) {
 function addRow() {
   const blank = {rowIndex:null,num:'',status:'',owFn:'',task:'',
     priOwner:'',secOwner:'',startDate:'',endDate:'',
-    tat:'',brief:'',volume:'',blocker:'',priority:''};
+    tat:'',brief:'',impact:'',volume:'',blocker:'',priority:''};
   const tbody = document.getElementById('tbody');
   if (tbody.querySelector('.empty')) tbody.innerHTML = '';
   const n = tbody.querySelectorAll('tr').length + 1;

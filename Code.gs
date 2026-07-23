@@ -17,9 +17,10 @@
  *   H  End Date
  *   I  TAT (Days)         Auto-calculated: End–Start or Today–Start (running)
  *   J  Task Brief / Details
- *   K  Volume
- *   L  Blocker
- *   M  Priority           High | Medium | Low
+ *   K  Impact (Description)
+ *   L  Volume
+ *   M  Blocker
+ *   N  Priority           High | Medium | Low
  */
 
 const SS_ID   = '1nc7qCA-VsAO3_kW76PAwwdsyWWVf-0dtYdZfxeKYbtU';
@@ -28,7 +29,7 @@ const HEADERS = [
   '#', 'Status', 'Owning Function', 'Task',
   'Primary Owner', 'Secondary Owner',
   'Start Date', 'End Date',
-  'TAT (Days)', 'Task Brief / Details', 'Volume',
+  'TAT (Days)', 'Task Brief / Details', 'Impact (Description)', 'Volume',
   'Blocker', 'Priority'
 ];
 
@@ -62,8 +63,8 @@ function _buildSheet(ss) {
   hdr.setWrap(true);
   sh.setRowHeight(1, 48);
 
-  //                  #    Status  OwFn  Task  PriOwn SecOwn Start End  TAT  Brief Vol  Blocker  Priority
-  const widths = [45, 120, 170,   240,  130,  130,   108,  108,  90,  280,  80,  200,    100];
+  //                  #    Status  OwFn  Task  PriOwn SecOwn Start End  TAT  Brief Impact Vol  Blocker  Priority
+  const widths = [45, 120, 170,   240,  130,  130,   108,  108,  90,  280,  240,  80,  200,    100];
   widths.forEach((w, i) => sh.setColumnWidth(i + 1, w));
   sh.setFrozenRows(1);
   return sh;
@@ -94,9 +95,10 @@ function getTasks() {
         endDate  : _fmt(r[7], tz),
         tat      : r[8]  || '',
         brief    : r[9]  || '',
-        volume   : r[10] || '',
-        blocker  : r[11] || '',
-        priority : r[12] || ''
+        impact   : r[10] || '',
+        volume   : r[11] || '',
+        blocker  : r[12] || '',
+        priority : r[13] || ''
       }));
 
   } catch (e) {
@@ -122,6 +124,7 @@ function saveTask(t) {
       t.endDate   ? new Date(t.endDate)   : '',
       tat,
       t.brief     || '',
+      t.impact    || '',
       t.volume    || '',
       t.blocker   || '',
       t.priority  || ''
