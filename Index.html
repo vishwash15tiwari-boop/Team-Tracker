@@ -79,6 +79,22 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   cursor:pointer;display:flex;align-items:center;gap:6px;
   box-shadow:0 2px 8px rgba(99,102,241,.35);transition:opacity .18s,transform .12s}
 .btn-add:hover{opacity:.9;transform:translateY(-1px)}
+.btn-dl{background:linear-gradient(135deg,#059669,#10b981);color:#fff;
+  border:none;padding:8px 16px;border-radius:7px;font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;gap:6px;
+  box-shadow:0 2px 8px rgba(5,150,105,.3);transition:opacity .18s,transform .12s}
+.btn-dl:hover{opacity:.9;transform:translateY(-1px)}
+.tl-sep{width:1px;height:26px;background:#d1d9e8;margin:0 4px;flex-shrink:0}
+.date-range{display:flex;align-items:center;gap:5px;
+  border:1px solid #d1d9e8;border-radius:7px;background:#fff;
+  padding:4px 10px;height:34px}
+.date-range .dr-lbl{font-size:11px;font-weight:700;color:#64748b;
+  white-space:nowrap;letter-spacing:.3px}
+.fdate{border:none;outline:none;font-size:12px;color:#1e2535;
+  background:transparent;padding:0 2px;cursor:pointer;width:116px}
+.fdate::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
+.date-sep{font-size:12px;color:#94a3b8;margin:0 2px}
+.tr-right{display:flex;align-items:center;gap:8px}
 
 /* ── Table ───────────────────────────────────────────────── */
 .tbl-wrap{padding:0 28px 50px;overflow-x:auto}
@@ -370,8 +386,18 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
       <option>MIS</option>
       <option>3rd Party</option>
     </select>
+    <div class="tl-sep"></div>
+    <div class="date-range">
+      <span class="dr-lbl">📅</span>
+      <input type="date" class="fdate" id="fDateFrom" onchange="filter()" title="Start date from">
+      <span class="date-sep">→</span>
+      <input type="date" class="fdate" id="fDateTo" onchange="filter()" title="Start date to">
+    </div>
   </div>
-  <button class="btn-add" onclick="addRow()">＋ Add Task</button>
+  <div class="tr-right">
+    <button class="btn-dl" onclick="downloadCSV()">⬇ Export CSV</button>
+    <button class="btn-add" onclick="addRow()">＋ Add Task</button>
+  </div>
 </div>
 
 <!-- Table -->
@@ -431,8 +457,9 @@ const PRIS      = ['','High','Medium','Low'];
 const PRI_CLS   = {'High':'p-high','Medium':'p-med','Low':'p-low','':'p-none'};
 
 // ── State ────────────────────────────────────────────────────────
-let allTasks  = [];
-let saveTimers = {};
+let allTasks    = [];
+let visibleTasks = [];
+let saveTimers  = {};
 
 // ── Boot ─────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', loadAll);
@@ -448,7 +475,8 @@ function loadAll() {
 function onLoad(data) {
   show('overlay', false);
   if (data && data.error) { toast('Error: '+data.error,'err'); return; }
-  allTasks = Array.isArray(data) ? data : [];
+  allTasks     = Array.isArray(data) ? data : [];
+  visibleTasks = allTasks.slice();
   updateStats(allTasks);
   filter();
   document.getElementById('syncLabel').textContent =
@@ -480,22 +508,57 @@ function updateStats(tasks) {
 
 // ── Filter ───────────────────────────────────────────────────────
 function filter() {
-  const q  = (document.getElementById('srch').value||'').toLowerCase();
-  const fs = document.getElementById('fStatus').value;
-  const fp = document.getElementById('fPri').value;
-  const fo = document.getElementById('fOwner').value;
-  const ff = document.getElementById('fFn').value;
+  const q      = (document.getElementById('srch').value||'').toLowerCase();
+  const fs     = document.getElementById('fStatus').value;
+  const fp     = document.getElementById('fPri').value;
+  const fo     = document.getElementById('fOwner').value;
+  const ff     = document.getElementById('fFn').value;
+  const fdFrom = document.getElementById('fDateFrom').value;
+  const fdTo   = document.getElementById('fDateTo').value;
 
-  const vis = allTasks.filter(t => {
+  visibleTasks = allTasks.filter(t => {
     const mq = !q || [t.task,t.owFn,t.brief,t.priOwner,t.blocker].some(v=>(v||'').toLowerCase().includes(q));
     const ms = !fs || t.status   === fs;
     const mp = !fp || t.priority === fp;
     const mo = !fo || t.priOwner === fo || t.secOwner === fo;
     const mf = !ff || t.owFn     === ff;
-    return mq && ms && mp && mo && mf;
+    const md = (!fdFrom || (t.startDate && t.startDate >= fdFrom)) &&
+               (!fdTo   || (t.startDate && t.startDate <= fdTo));
+    return mq && ms && mp && mo && mf && md;
   });
 
-  render(vis);
+  render(visibleTasks);
+}
+
+// ── Export CSV ───────────────────────────────────────────────────
+function downloadCSV() {
+  if (!visibleTasks.length) { toast('No tasks to export.','err'); return; }
+
+  const hdrs = ['#','Status','Owning Function','Task','Primary Owner',
+    'Secondary Owner','Start Date','End Date','TAT (Days)',
+    'Task Brief / Details','Volume','Blocker','Priority'];
+
+  const esc2 = v => '"' + String(v||'').replace(/"/g,'""') + '"';
+
+  const rows = visibleTasks.map(t =>
+    [t.num,t.status,t.owFn,t.task,t.priOwner,t.secOwner,
+     t.startDate,t.endDate,t.tat,t.brief,t.volume,t.blocker,t.priority
+    ].map(esc2).join(',')
+  );
+
+  const csv  = [hdrs.map(esc2).join(','), ...rows].join('\r\n');
+
+  const fdFrom = document.getElementById('fDateFrom').value;
+  const fdTo   = document.getElementById('fDateTo').value;
+  const suffix = (fdFrom || fdTo)
+    ? `_${fdFrom||'start'}_to_${fdTo||'today'}`
+    : '_' + new Date().toISOString().slice(0,10);
+
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'TaskTracker' + suffix + '.csv';
+  a.click();
+  toast('Downloaded ' + visibleTasks.length + ' tasks ✓','ok');
 }
 
 // ── Render ───────────────────────────────────────────────────────
