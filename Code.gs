@@ -4,9 +4,9 @@
  * Team  : Ajay (Manager) | Harshita | Vamsi | Naveen | Vishwas
  * Sheet : 1nc7qCA-VsAO3_kW76PAwwdsyWWVf-0dtYdZfxeKYbtU → "Task Tracker" tab
  *
- * Columns A–L
+ * Columns A–N
  *   A  #                  Auto-numbered
- *   B  Rank               1 | 2 | 3 | 4
+ *   B  Status             Not Started | In Progress | Completed | On Hold
  *   C  Owning Function    Marketplace | Open Marketplace | EPR & Sustainability |
  *                         SOPs / MIS / Tracker | Onboarding | Admin |
  *                         Automation | Marketing | SOP | MIS | 3rd Party
@@ -19,15 +19,18 @@
  *   J  TAT (Days)         Auto-calculated: End–Start or Today–Start (running)
  *   K  Task Brief / Details
  *   L  Volume
+ *   M  Blocker
+ *   N  Priority           High | Medium | Low
  */
 
 const SS_ID   = '1nc7qCA-VsAO3_kW76PAwwdsyWWVf-0dtYdZfxeKYbtU';
 const SH_NAME = 'Task Tracker';
 const HEADERS = [
-  '#', 'Rank', 'Owning Function', 'Task',
+  '#', 'Status', 'Owning Function', 'Task',
   'Primary Owner', 'Secondary Owner',
   'Start Date', 'Due Date', 'End Date',
-  'TAT (Days)', 'Task Brief / Details', 'Volume'
+  'TAT (Days)', 'Task Brief / Details', 'Volume',
+  'Blocker', 'Priority'
 ];
 
 // ── Entry point ──────────────────────────────────────────────────────────────
@@ -60,7 +63,8 @@ function _buildSheet(ss) {
   hdr.setWrap(true);
   sh.setRowHeight(1, 48);
 
-  const widths = [45, 70, 175, 240, 130, 130, 108, 108, 108, 90, 290, 85];
+  //                  #    Status  OwFn  Task  PriOwn SecOwn Start Due  End  TAT  Brief Vol  Blocker  Priority
+  const widths = [45, 120, 170,   240,  130,  130,   108,  108, 108,  90,  280,  80,  200,    100];
   widths.forEach((w, i) => sh.setColumnWidth(i + 1, w));
   sh.setFrozenRows(1);
   return sh;
@@ -82,7 +86,7 @@ function getTasks() {
       .map((r, i) => ({
         rowIndex : i + 2,
         num      : r[0],
-        rank     : String(r[1] || ''),
+        status   : r[1]  || '',
         owFn     : r[2]  || '',
         task     : r[3]  || '',
         priOwner : r[4]  || '',
@@ -92,7 +96,9 @@ function getTasks() {
         endDate  : _fmt(r[8], tz),
         tat      : r[9]  || '',
         brief    : r[10] || '',
-        volume   : r[11] || ''
+        volume   : r[11] || '',
+        blocker  : r[12] || '',
+        priority : r[13] || ''
       }));
 
   } catch (e) {
@@ -109,7 +115,7 @@ function saveTask(t) {
 
     const row = [
       t.num != null ? t.num : '',
-      t.rank      || '',
+      t.status    || '',
       t.owFn      || '',
       t.task      || '',
       t.priOwner  || '',
@@ -119,7 +125,9 @@ function saveTask(t) {
       t.endDate   ? new Date(t.endDate)   : '',
       tat,
       t.brief     || '',
-      t.volume    || ''
+      t.volume    || '',
+      t.blocker   || '',
+      t.priority  || ''
     ];
 
     let targetRow;
@@ -128,13 +136,11 @@ function saveTask(t) {
       sh.getRange(t.rowIndex, 1, 1, HEADERS.length).setValues([row]);
       targetRow = t.rowIndex;
     } else {
-      const lr = sh.getLastRow();
-      row[0] = Math.max(lr, 1);   // auto-number
+      row[0] = Math.max(sh.getLastRow(), 1);
       sh.appendRow(row);
       targetRow = sh.getLastRow();
     }
 
-    // Date format
     ['G', 'H', 'I'].forEach(col => {
       const c = sh.getRange(col + targetRow);
       if (c.getValue()) c.setNumberFormat('dd-mmm-yyyy');

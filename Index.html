@@ -14,8 +14,7 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .app-bar{
   background:#16213e;height:58px;padding:0 28px;
   display:flex;align-items:center;justify-content:space-between;
-  box-shadow:0 2px 10px rgba(0,0,0,.3);position:sticky;top:0;z-index:200
-}
+  box-shadow:0 2px 10px rgba(0,0,0,.3);position:sticky;top:0;z-index:200}
 .brand{display:flex;align-items:center;gap:11px}
 .logo{width:34px;height:34px;border-radius:8px;
   background:linear-gradient(135deg,#6366f1,#8b5cf6);
@@ -25,48 +24,34 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .hdr-right{display:flex;align-items:center;gap:12px}
 .sync-info{font-size:11px;color:#64748b}
 #syncBtn{background:transparent;border:1px solid #334155;color:#94a3b8;
-  padding:5px 13px;border-radius:6px;cursor:pointer;font-size:12px;
-  transition:all .18s}
+  padding:5px 13px;border-radius:6px;cursor:pointer;font-size:12px;transition:all .18s}
 #syncBtn:hover{background:#1e3254;color:#e2e8f0}
 
 /* ── Overview strip ──────────────────────────────────────── */
 .ov-strip{
   margin:16px 28px 0;background:#fff;border:1px solid #e4e9f2;
   border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.06);
-  display:flex;align-items:stretch;overflow:hidden
-}
-.ov-left{
-  flex:1;padding:16px 24px;border-right:1px solid #e4e9f2;min-width:0
-}
-.ov-title{
-  font-size:10px;font-weight:800;letter-spacing:1.2px;
-  text-transform:uppercase;color:#059669;margin-bottom:10px
-}
-.ov-row{
-  display:flex;align-items:center;justify-content:space-between;margin-bottom:8px
-}
+  display:flex;align-items:stretch;overflow:hidden}
+.ov-left{flex:1;padding:16px 24px;border-right:1px solid #e4e9f2;min-width:0}
+.ov-title{font-size:10px;font-weight:800;letter-spacing:1.2px;
+  text-transform:uppercase;color:#059669;margin-bottom:10px}
+.ov-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .ov-row .lbl{font-size:10px;font-weight:600;letter-spacing:.6px;
   text-transform:uppercase;color:#94a3b8}
 .ov-total{font-size:13px;font-weight:800;color:#1e2535;white-space:nowrap}
-/* progress bar */
 .prog-track{height:10px;border-radius:99px;background:#e9ecef;overflow:hidden;margin-bottom:8px}
 .prog-fill{height:100%;border-radius:99px;background:#f59e0b;
   transition:width .5s ease;min-width:0}
 .prog-fill.full{background:#22c55e}
-/* status dots */
-.dot-row{display:flex;align-items:center;gap:16px}
+.dot-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .dot-item{display:flex;align-items:center;gap:5px;
   font-size:11px;color:#475569;white-space:nowrap}
 .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.dot.done{background:#22c55e}
-.dot.inprog{background:#f59e0b}
-.dot.notstart{background:#d1d5db}
-/* right metrics */
+.dot.done{background:#22c55e}.dot.inprog{background:#f59e0b}
+.dot.hold{background:#ef4444}.dot.notstart{background:#d1d5db}
 .ov-metrics{display:flex;align-items:stretch}
-.ov-met{
-  padding:14px 28px;display:flex;flex-direction:column;
-  justify-content:center;border-right:1px solid #e4e9f2;min-width:130px
-}
+.ov-met{padding:14px 26px;display:flex;flex-direction:column;
+  justify-content:center;border-right:1px solid #e4e9f2;min-width:120px}
 .ov-met:last-child{border-right:none}
 .ov-met .ml{font-size:9.5px;font-weight:700;text-transform:uppercase;
   letter-spacing:.9px;color:#94a3b8;margin-bottom:5px}
@@ -80,12 +65,12 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .search-wrap .ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);
   color:#94a3b8;pointer-events:none;font-size:14px}
 .search-wrap input{border:1px solid #d1d9e8;border-radius:7px;
-  padding:7px 10px 7px 32px;font-size:12.5px;width:210px;outline:none;
+  padding:7px 10px 7px 32px;font-size:12.5px;width:200px;outline:none;
   background:#fff;color:#1e2535;transition:border-color .18s}
 .search-wrap input:focus{border-color:#6366f1}
 .fsel{border:1px solid #d1d9e8;border-radius:7px;
-  padding:7px 26px 7px 10px;font-size:12px;background:#fff
-  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394a3b8'/%3E%3C/svg%3E")
+  padding:7px 26px 7px 10px;font-size:12px;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394a3b8'/%3E%3C/svg%3E")
   no-repeat right 8px center;-webkit-appearance:none;outline:none;
   color:#1e2535;cursor:pointer;min-width:120px}
 .fsel:focus{border-color:#6366f1}
@@ -98,17 +83,13 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 /* ── Table ───────────────────────────────────────────────── */
 .tbl-wrap{padding:0 28px 50px;overflow-x:auto}
 .tbl{width:100%;border-collapse:collapse;background:#fff;
-  border-radius:12px;overflow:hidden;min-width:1400px;
+  border-radius:12px;overflow:hidden;min-width:1600px;
   box-shadow:0 2px 16px rgba(0,0,0,.09)}
-
-/* header */
 .tbl thead tr{background:#16213e}
 .tbl thead th{color:#b0bcd8;font-size:10px;font-weight:700;
   text-transform:uppercase;letter-spacing:.7px;padding:13px 10px;
   white-space:nowrap;text-align:left;border-bottom:2px solid #0f172a}
 .tbl thead th.ctr{text-align:center}
-
-/* rows */
 .tbl tbody tr{border-bottom:1px solid #edf0f7;transition:background .1s}
 .tbl tbody tr:last-child{border-bottom:none}
 .tbl tbody tr:hover{background:#f4f6ff !important}
@@ -117,53 +98,49 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .tbl tbody td.ctr{text-align:center}
 
 /* col widths */
-.c-num{width:44px}.c-rank{width:115px}.c-owfn{width:170px}
-.c-task{min-width:200px}.c-own{width:138px}.c-date{width:116px}
-.c-tat{width:112px;text-align:center}.c-brief{min-width:200px}
-.c-vol{width:75px;text-align:center}.c-act{width:64px;text-align:center}
+.c-num{width:44px}.c-status{width:128px}.c-owfn{width:165px}
+.c-task{min-width:200px}.c-own{width:135px}.c-date{width:110px}
+.c-tat{width:108px;text-align:center}.c-brief{min-width:180px}
+.c-vol{width:72px;text-align:center}.c-blocker{min-width:160px}
+.c-pri{width:108px}.c-act{width:54px;text-align:center}
 
-/* row-number */
+/* row number */
 .rnum{font-size:11px;font-weight:700;color:#94a3b8;text-align:center}
 
-/* ── Inline controls ─────────────────────────────────────── */
-
-/* base select / input shared styles */
-.cell-sel,.cell-inp,.cell-date{
-  width:100%;font-family:inherit;font-size:12px;
-  border:1.5px solid transparent;border-radius:20px;
-  background:transparent;color:#334155;outline:none;
-  transition:border-color .15s,background .15s;
-  cursor:pointer}
-.cell-sel:hover,.cell-inp:hover,.cell-date:hover{background:#f1f5f9}
-.cell-sel:focus,.cell-inp:focus,.cell-date:focus{
-  border-color:#6366f1;background:#fff;cursor:text;
-  box-shadow:0 0 0 2px rgba(99,102,241,.12)}
-
-/* ── Rank select — pill style ─────────────────────────────── */
-.rank-sel{
+/* ── Pill select — shared base ───────────────────────────── */
+.pill-sel{
   -webkit-appearance:none;appearance:none;
-  padding:5px 24px 5px 12px;font-weight:700;font-size:13px;
-  text-align:center;border-radius:20px;border-width:1.5px;border-style:solid;
+  padding:5px 24px 5px 11px;font-weight:700;font-size:12px;
+  border-radius:20px;border-width:1.5px;border-style:solid;
   background-repeat:no-repeat;background-position:right 7px center;
-  background-size:9px;cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0z' fill='%2364748b'/%3E%3C/svg%3E")}
-.rank-sel.r1{background-color:#dcfce7;border-color:#86efac;color:#16a34a}
-.rank-sel.r2{background-color:#fef9c3;border-color:#fde047;color:#854d0e}
-.rank-sel.r3{background-color:#ffedd5;border-color:#fdba74;color:#9a3412}
-.rank-sel.r4{background-color:#fee2e2;border-color:#fca5a5;color:#991b1b}
-.rank-sel.r0{background-color:#f1f5f9;border-color:#e2e8f0;color:#94a3b8}
+  background-size:9px;cursor:pointer;width:100%;font-family:inherit;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0z' fill='%2364748b'/%3E%3C/svg%3E");
+  outline:none;transition:box-shadow .15s}
+.pill-sel:focus{box-shadow:0 0 0 3px rgba(99,102,241,.18)}
 
-/* ── Function select ─────────────────────────────────────── */
+/* ── Status pill colours ─────────────────────────────────── */
+.pill-sel.s-ns  {background-color:#f1f5f9;border-color:#cbd5e1;color:#64748b}
+.pill-sel.s-ip  {background-color:#fef3c7;border-color:#fcd34d;color:#92400e}
+.pill-sel.s-done{background-color:#dcfce7;border-color:#86efac;color:#166534}
+.pill-sel.s-hold{background-color:#fee2e2;border-color:#fca5a5;color:#991b1b}
+
+/* ── Priority pill colours ───────────────────────────────── */
+.pill-sel.p-high{background-color:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.pill-sel.p-med {background-color:#fef9c3;border-color:#fde047;color:#854d0e}
+.pill-sel.p-low {background-color:#f0fdf4;border-color:#86efac;color:#166534}
+.pill-sel.p-none{background-color:#f8fafc;border-color:#e2e8f0;color:#94a3b8}
+
+/* ── Owning-function select ──────────────────────────────── */
 .fn-sel{
   -webkit-appearance:none;appearance:none;
   padding:5px 22px 5px 10px;border-radius:20px;font-size:12px;
   border:1.5px solid #e2e8f0;background-color:#f8fafc;color:#334155;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0z' fill='%2394a3b8'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 7px center;
-  background-size:9px;cursor:pointer;width:100%}
+  background-size:9px;cursor:pointer;width:100%;outline:none;font-family:inherit}
 .fn-sel:hover{border-color:#6366f1;background-color:#eff6ff}
-.fn-sel:focus{border-color:#6366f1;background-color:#fff;outline:none;
-  box-shadow:0 0 0 2px rgba(99,102,241,.12)}
+.fn-sel:focus{border-color:#6366f1;background-color:#fff;
+  box-shadow:0 0 0 3px rgba(99,102,241,.12)}
 
 /* ── Owner select ────────────────────────────────────────── */
 .own-sel{
@@ -172,11 +149,10 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   border:1.5px solid #e2e8f0;color:#334155;background-color:#f1f5f9;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6L9 0z' fill='%2394a3b8'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 7px center;
-  background-size:9px;cursor:pointer;width:100%;position:relative}
+  background-size:9px;cursor:pointer;width:100%;outline:none;font-family:inherit}
 .own-sel:hover{border-color:#6366f1}
-.own-sel:focus{border-color:#6366f1;background-color:#fff;outline:none;
-  box-shadow:0 0 0 2px rgba(99,102,241,.12)}
-/* wrapper with avatar dot */
+.own-sel:focus{border-color:#6366f1;background-color:#fff;
+  box-shadow:0 0 0 3px rgba(99,102,241,.12)}
 .own-wrap{position:relative;display:flex;align-items:center}
 .own-dot{position:absolute;left:8px;top:50%;transform:translateY(-50%);
   width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:800;
@@ -186,58 +162,59 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .dot-N{background:#10b981}.dot-W{background:#f59e0b}
 .dot-A{background:#ec4899}.dot-X{background:#94a3b8}
 
-/* ── Task input ──────────────────────────────────────────── */
-.task-inp{
+/* ── Text inputs ─────────────────────────────────────────── */
+.task-inp,.brief-inp,.blocker-inp{
   width:100%;background:transparent;border:1.5px solid transparent;
-  border-radius:6px;padding:5px 7px;font-size:13px;font-weight:600;
-  color:#1e2535;font-family:inherit;outline:none;
+  border-radius:6px;padding:5px 7px;font-family:inherit;outline:none;
   transition:border-color .15s,background .15s}
-.task-inp:hover{background:#f8fafc;border-color:#e2e8f0}
-.task-inp:focus{background:#fff;border-color:#6366f1;
+.task-inp{font-size:13px;font-weight:600;color:#1e2535}
+.brief-inp{font-size:12px;color:#475569}
+.blocker-inp{font-size:12px;color:#b91c1c}
+.task-inp::placeholder,.brief-inp::placeholder,.blocker-inp::placeholder{
+  font-weight:400;color:#cbd5e1}
+.task-inp:hover,.brief-inp:hover,.blocker-inp:hover{
+  background:#f8fafc;border-color:#e2e8f0}
+.task-inp:focus,.brief-inp:focus,.blocker-inp:focus{
+  background:#fff;border-color:#6366f1;
   box-shadow:0 0 0 2px rgba(99,102,241,.12)}
-.task-inp::placeholder{font-weight:400;color:#94a3b8}
+.blocker-inp:focus{border-color:#ef4444;
+  box-shadow:0 0 0 2px rgba(239,68,68,.12)}
+
+/* blocker icon hint */
+.blocker-wrap{position:relative}
+.blocker-wrap .b-ic{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font-size:12px;pointer-events:none;opacity:0;transition:opacity .2s}
+.blocker-wrap:has(.blocker-inp:not(:placeholder-shown)) .b-ic{opacity:1}
 
 /* ── Date input ──────────────────────────────────────────── */
 .date-inp{
   width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;
   border-radius:20px;padding:5px 10px;font-size:11.5px;
-  color:#334155;font-family:inherit;outline:none;text-align:center;
-  cursor:pointer;transition:border-color .15s}
+  color:#334155;font-family:inherit;outline:none;text-align:center;cursor:pointer}
 .date-inp:hover{border-color:#6366f1;background:#eff6ff}
 .date-inp:focus{border-color:#6366f1;background:#fff;
   box-shadow:0 0 0 2px rgba(99,102,241,.12)}
 .date-inp.overdue{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
 .date-inp.warning{background:#fffbeb;border-color:#fde68a;color:#92400e}
 
-/* ── TAT badge ───────────────────────────────────────────── */
+/* ── Volume ─────────────────────────────────────────────── */
+.vol-inp{width:65px;background:#f8fafc;border:1.5px solid #e2e8f0;
+  border-radius:20px;padding:5px 8px;font-size:12px;font-weight:600;
+  color:#334155;font-family:inherit;outline:none;text-align:center}
+.vol-inp:hover{border-color:#6366f1}.vol-inp:focus{border-color:#6366f1;
+  background:#fff;box-shadow:0 0 0 2px rgba(99,102,241,.12)}
+
+/* ── TAT ─────────────────────────────────────────────────── */
 .tat-pill{display:inline-block;border-radius:20px;padding:3px 10px;
   font-size:11.5px;font-weight:600;white-space:nowrap}
 .tat-done{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
 .tat-run {background:#fdf4ff;color:#9333ea;border:1px solid #e9d5ff}
 .tat-none{color:#cbd5e1;font-size:11px}
 
-/* ── Brief input ─────────────────────────────────────────── */
-.brief-inp{
-  width:100%;background:transparent;border:1.5px solid transparent;
-  border-radius:6px;padding:5px 7px;font-size:12px;
-  color:#475569;font-family:inherit;outline:none;
-  transition:border-color .15s,background .15s}
-.brief-inp:hover{background:#f8fafc;border-color:#e2e8f0}
-.brief-inp:focus{background:#fff;border-color:#6366f1;
-  box-shadow:0 0 0 2px rgba(99,102,241,.12)}
-.brief-inp::placeholder{color:#cbd5e1}
-
-/* ── Volume input ────────────────────────────────────────── */
-.vol-inp{
-  width:68px;background:#f8fafc;border:1.5px solid #e2e8f0;
-  border-radius:20px;padding:5px 8px;font-size:12px;font-weight:600;
-  color:#334155;font-family:inherit;outline:none;text-align:center;
-  transition:border-color .15s}
-.vol-inp:hover{border-color:#6366f1}
-.vol-inp:focus{border-color:#6366f1;background:#fff;
-  box-shadow:0 0 0 2px rgba(99,102,241,.12)}
-
-/* ── Action buttons ─────────────────────────────────────── */
+/* ── Empty & actions ─────────────────────────────────────── */
+.empty{text-align:center;padding:60px 20px;color:#94a3b8}
+.empty .icon{font-size:44px;margin-bottom:12px}
 .act-btns{display:flex;gap:4px;justify-content:center}
 .btn-ic{width:27px;height:27px;border-radius:6px;border:1px solid transparent;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
@@ -245,9 +222,8 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 .btn-del{background:#fef2f2;border-color:#fecaca}
 .btn-del:hover{background:#fee2e2}
 
-/* ── Saving indicator ────────────────────────────────────── */
-.saving-dot{
-  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+/* ── Saving dot ─────────────────────────────────────────── */
+.saving-dot{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
   background:#1e293b;color:#f8fafc;border-radius:20px;
   padding:8px 18px;font-size:12.5px;font-weight:500;
   box-shadow:0 4px 16px rgba(0,0,0,.2);
@@ -257,9 +233,30 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   border-top-color:#22c55e;border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── Empty state ────────────────────────────────────────── */
-.empty{text-align:center;padding:60px 20px;color:#94a3b8}
-.empty .icon{font-size:44px;margin-bottom:12px}
+/* ── Loading ─────────────────────────────────────────────── */
+#overlay{position:fixed;inset:0;background:rgba(240,242,247,.88);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;gap:14px}
+.spin-lg{width:42px;height:42px;border:4px solid #e2e8f0;
+  border-top-color:#6366f1;border-radius:50%;animation:spin .7s linear infinite}
+#overlay p{color:#64748b;font-size:13px}
+
+/* ── Confirm ─────────────────────────────────────────────── */
+.cdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);
+  z-index:700;align-items:center;justify-content:center}
+.cdrop.open{display:flex}
+.cbox{background:#fff;border-radius:12px;padding:28px;max-width:360px;
+  width:90vw;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center}
+.cbox .ci{font-size:34px;margin-bottom:10px}
+.cbox h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.cbox p{font-size:12.5px;color:#64748b;margin-bottom:22px}
+.ca{display:flex;gap:10px;justify-content:center}
+.btn-cancel{background:#f8fafc;border:1px solid #e2e8f0;color:#64748b;
+  padding:8px 20px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer}
+.btn-cancel:hover{background:#f1f5f9}
+.btn-cdel{background:#dc2626;color:#fff;border:none;
+  padding:8px 22px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer}
+.btn-cdel:hover{background:#b91c1c}
 
 /* ── Toast ──────────────────────────────────────────────── */
 #toast-box{position:fixed;bottom:24px;right:24px;z-index:9999;
@@ -268,35 +265,9 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   color:#f8fafc;border-radius:9px;padding:11px 16px;font-size:12.5px;
   font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);
   animation:toastIn .22s ease;max-width:320px}
-.toast.ok {border-left:4px solid #22c55e}
+.toast.ok{border-left:4px solid #22c55e}
 .toast.err{border-left:4px solid #ef4444}
 @keyframes toastIn{from{transform:translateX(28px);opacity:0}to{transform:none;opacity:1}}
-
-/* ── Loading overlay ─────────────────────────────────────── */
-#overlay{position:fixed;inset:0;background:rgba(240,242,247,.88);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;gap:14px}
-.spin-lg{width:42px;height:42px;border:4px solid #e2e8f0;
-  border-top-color:#6366f1;border-radius:50%;animation:spin .7s linear infinite}
-#overlay p{color:#64748b;font-size:13px}
-
-/* ── Confirm dialog ─────────────────────────────────────── */
-.cdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);
-  z-index:700;align-items:center;justify-content:center}
-.cdrop.open{display:flex}
-.cbox{background:#fff;border-radius:12px;padding:28px;max-width:360px;
-  width:90vw;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center}
-.cbox .ic{font-size:34px;margin-bottom:10px}
-.cbox h3{font-size:15px;font-weight:700;margin-bottom:6px}
-.cbox p {font-size:12.5px;color:#64748b;margin-bottom:22px}
-.ca{display:flex;gap:10px;justify-content:center}
-.btn-cancel{background:#f8fafc;border:1px solid #e2e8f0;color:#64748b;
-  padding:8px 20px;border-radius:7px;font-size:12.5px;font-weight:600;
-  cursor:pointer}
-.btn-cancel:hover{background:#f1f5f9}
-.btn-cdel{background:#dc2626;color:#fff;border:none;
-  padding:8px 22px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer}
-.btn-cdel:hover{background:#b91c1c}
 </style>
 </head>
 <body>
@@ -324,7 +295,6 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 
 <!-- Overview strip -->
 <div class="ov-strip">
-  <!-- left: progress -->
   <div class="ov-left">
     <div class="ov-title">Task Overview</div>
     <div class="ov-row">
@@ -337,17 +307,21 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
     <div class="dot-row">
       <span class="dot-item"><span class="dot done"></span><span id="ov-done">0</span> Completed</span>
       <span class="dot-item"><span class="dot inprog"></span><span id="ov-prog">0</span> In Progress</span>
+      <span class="dot-item"><span class="dot hold"></span><span id="ov-hold">0</span> On Hold</span>
       <span class="dot-item"><span class="dot notstart"></span><span id="ov-ns">0</span> Not Started</span>
     </div>
   </div>
-  <!-- right: 3 metrics -->
   <div class="ov-metrics">
     <div class="ov-met">
-      <div class="ml">Rank 1 Tasks</div>
-      <div class="mv" id="ov-r1">0</div>
+      <div class="ml">High Priority</div>
+      <div class="mv" id="ov-high">0</div>
     </div>
     <div class="ov-met">
-      <div class="ml">Functions Covered</div>
+      <div class="ml">Blocked Tasks</div>
+      <div class="mv" id="ov-blk">0</div>
+    </div>
+    <div class="ov-met">
+      <div class="ml">Functions</div>
       <div class="mv" id="ov-fn">0</div>
     </div>
     <div class="ov-met">
@@ -364,17 +338,23 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
       <span class="ic">🔍</span>
       <input type="text" id="srch" placeholder="Search tasks…" oninput="filter()">
     </div>
+    <select class="fsel" id="fStatus" onchange="filter()">
+      <option value="">All Statuses</option>
+      <option>Not Started</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+      <option>On Hold</option>
+    </select>
+    <select class="fsel" id="fPri" onchange="filter()">
+      <option value="">All Priorities</option>
+      <option>High</option>
+      <option>Medium</option>
+      <option>Low</option>
+    </select>
     <select class="fsel" id="fOwner" onchange="filter()">
       <option value="">All Owners</option>
       <option>Ajay</option><option>Harshita</option>
       <option>Vamsi</option><option>Naveen</option><option>Vishwas</option>
-    </select>
-    <select class="fsel" id="fRank" onchange="filter()">
-      <option value="">All Ranks</option>
-      <option value="1">Rank 1 — Critical</option>
-      <option value="2">Rank 2 — High</option>
-      <option value="3">Rank 3 — Medium</option>
-      <option value="4">Rank 4 — Low</option>
     </select>
     <select class="fsel" id="fFn" onchange="filter()">
       <option value="">All Functions</option>
@@ -399,7 +379,7 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 <table class="tbl" id="tbl">
   <thead><tr>
     <th class="c-num ctr">#</th>
-    <th class="c-rank ctr">Rank</th>
+    <th class="c-status">Status</th>
     <th class="c-owfn">Owning Function</th>
     <th class="c-task">Task</th>
     <th class="c-own">Primary Owner</th>
@@ -407,16 +387,18 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
     <th class="c-date ctr">Start Date</th>
     <th class="c-date ctr">Due Date</th>
     <th class="c-date ctr">End Date</th>
-    <th class="c-tat">TAT</th>
+    <th class="c-tat ctr">TAT</th>
     <th class="c-brief">Task Brief / Details</th>
     <th class="c-vol ctr">Volume</th>
+    <th class="c-blocker">Blocker</th>
+    <th class="c-pri">Priority</th>
     <th class="c-act"></th>
   </tr></thead>
   <tbody id="tbody"></tbody>
 </table>
 </div>
 
-<!-- Saving indicator -->
+<!-- Saving dot -->
 <div class="saving-dot" id="savingDot">
   <div class="spin-sm"></div> Saving to Sheet…
 </div>
@@ -424,7 +406,7 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
 <!-- Delete confirm -->
 <div class="cdrop" id="cdrop">
   <div class="cbox">
-    <div class="ic">🗑️</div>
+    <div class="ci">🗑️</div>
     <h3>Delete Task?</h3>
     <p>This row will be permanently removed from the sheet.</p>
     <div class="ca">
@@ -434,23 +416,24 @@ body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:#f0f2f7;
   </div>
 </div>
 
-<!-- Toast -->
 <div id="toast-box"></div>
 
 <script>
 // ── Constants ────────────────────────────────────────────────────
-const OWNERS = ['','Ajay','Harshita','Vamsi','Naveen','Vishwas'];
-const OWNER_INIT = {Ajay:'A',Harshita:'H',Vamsi:'V',Naveen:'N',Vishwas:'W'};
-const OWNER_DOT  = {Ajay:'dot-A',Harshita:'dot-H',Vamsi:'dot-V',Naveen:'dot-N',Vishwas:'dot-W'};
-const FNS = [
-  '','Marketplace','Open Marketplace','EPR & Sustainability',
-  'SOPs / MIS / Tracker','Onboarding','Admin','Automation',
-  'Marketing','SOP','MIS','3rd Party'
-];
+const OWNERS    = ['','Ajay','Harshita','Vamsi','Naveen','Vishwas'];
+const OWN_INIT  = {Ajay:'A',Harshita:'H',Vamsi:'V',Naveen:'N',Vishwas:'W'};
+const OWN_DOT   = {Ajay:'dot-A',Harshita:'dot-H',Vamsi:'dot-V',Naveen:'dot-N',Vishwas:'dot-W'};
+const FNS       = ['','Marketplace','Open Marketplace','EPR & Sustainability',
+                   'SOPs / MIS / Tracker','Onboarding','Admin','Automation',
+                   'Marketing','SOP','MIS','3rd Party'];
+const STATUSES  = ['','Not Started','In Progress','Completed','On Hold'];
+const STAT_CLS  = {'Not Started':'s-ns','In Progress':'s-ip','Completed':'s-done','On Hold':'s-hold','':'s-ns'};
+const PRIS      = ['','High','Medium','Low'];
+const PRI_CLS   = {'High':'p-high','Medium':'p-med','Low':'p-low','':'p-none'};
 
 // ── State ────────────────────────────────────────────────────────
-let allTasks = [];
-let saveTimers = {};   // rowIndex → debounce timer (for text fields)
+let allTasks  = [];
+let saveTimers = {};
 
 // ── Boot ─────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', loadAll);
@@ -475,44 +458,42 @@ function onLoad(data) {
 
 // ── Overview strip ────────────────────────────────────────────────
 function updateStats(tasks) {
-  const tot   = tasks.length;
-  const done  = tasks.filter(t => t.endDate).length;
-  const inPrg = tasks.filter(t => t.startDate && !t.endDate).length;
-  const notSt = tasks.filter(t => !t.startDate).length;
-  const pct   = tot ? Math.round((done / tot) * 100) : 0;
-  const fns   = new Set(tasks.map(t => t.owFn).filter(Boolean)).size;
-  const mems  = new Set([
-    ...tasks.map(t => t.priOwner),
-    ...tasks.map(t => t.secOwner)
-  ].filter(Boolean)).size;
-  const r1    = tasks.filter(t => String(t.rank) === '1').length;
+  const tot    = tasks.length;
+  const done   = tasks.filter(t => t.status === 'Completed').length;
+  const inPrg  = tasks.filter(t => t.status === 'In Progress').length;
+  const hold   = tasks.filter(t => t.status === 'On Hold').length;
+  const notSt  = tasks.filter(t => !t.status || t.status === 'Not Started').length;
+  const pct    = tot ? Math.round((done / tot) * 100) : 0;
+  const high   = tasks.filter(t => t.priority === 'High').length;
+  const blk    = tasks.filter(t => t.blocker && t.blocker.trim()).length;
+  const fns    = new Set(tasks.map(t=>t.owFn).filter(Boolean)).size;
+  const mems   = new Set([...tasks.map(t=>t.priOwner),...tasks.map(t=>t.secOwner)].filter(Boolean)).size;
 
-  document.getElementById('ov-tot').textContent  = tot;
-  document.getElementById('ov-done').textContent = done;
-  document.getElementById('ov-prog').textContent = inPrg;
-  document.getElementById('ov-ns').textContent   = notSt;
-  document.getElementById('ov-r1').textContent   = r1;
-  document.getElementById('ov-fn').textContent   = fns;
-  document.getElementById('ov-mem').textContent  = mems;
+  set('ov-tot',  tot);  set('ov-done', done); set('ov-prog', inPrg);
+  set('ov-hold', hold); set('ov-ns',   notSt);
+  set('ov-high', high); set('ov-blk',  blk);
+  set('ov-fn',   fns);  set('ov-mem',  mems);
 
   const bar = document.getElementById('ov-bar');
   bar.style.width = pct + '%';
   bar.classList.toggle('full', pct === 100);
 }
 
-// ── Filter + render ──────────────────────────────────────────────
+// ── Filter ───────────────────────────────────────────────────────
 function filter() {
   const q  = (document.getElementById('srch').value||'').toLowerCase();
+  const fs = document.getElementById('fStatus').value;
+  const fp = document.getElementById('fPri').value;
   const fo = document.getElementById('fOwner').value;
-  const fr = document.getElementById('fRank').value;
   const ff = document.getElementById('fFn').value;
 
   const vis = allTasks.filter(t => {
-    const mq  = !q  || [t.task,t.owFn,t.brief,t.priOwner].some(v=>(v||'').toLowerCase().includes(q));
-    const mo  = !fo || t.priOwner===fo || t.secOwner===fo;
-    const mr  = !fr || String(t.rank)===fr;
-    const mf  = !ff || t.owFn===ff;
-    return mq && mo && mr && mf;
+    const mq = !q || [t.task,t.owFn,t.brief,t.priOwner,t.blocker].some(v=>(v||'').toLowerCase().includes(q));
+    const ms = !fs || t.status   === fs;
+    const mp = !fp || t.priority === fp;
+    const mo = !fo || t.priOwner === fo || t.secOwner === fo;
+    const mf = !ff || t.owFn     === ff;
+    return mq && ms && mp && mo && mf;
   });
 
   render(vis);
@@ -521,62 +502,57 @@ function filter() {
 // ── Render ───────────────────────────────────────────────────────
 function render(tasks) {
   const tbody = document.getElementById('tbody');
-
   if (!tasks.length) {
-    tbody.innerHTML = `<tr><td colspan="13"><div class="empty">
-      <div class="icon">📋</div>
-      <strong>No tasks found</strong><br>
+    tbody.innerHTML = `<tr><td colspan="15"><div class="empty">
+      <div class="icon">📋</div><strong>No tasks found</strong><br>
       <span style="font-size:12px">Click <em>Add Task</em> or adjust your filters.</span>
     </div></td></tr>`;
     return;
   }
-
   tbody.innerHTML = tasks.map((t,i) => buildRow(t,i+1)).join('');
-
-  // update rank select colours
-  tbody.querySelectorAll('.rank-sel').forEach(updateRankStyle);
-  // update owner dot colours
+  tbody.querySelectorAll('.pill-sel[data-field="status"]').forEach(updateStatusStyle);
+  tbody.querySelectorAll('.pill-sel[data-field="priority"]').forEach(updatePriStyle);
   tbody.querySelectorAll('.own-wrap').forEach(w => updateDot(w));
 }
 
-// ── Build one table row ──────────────────────────────────────────
+// ── Build row ────────────────────────────────────────────────────
 function buildRow(t, display) {
   const ri = t.rowIndex || 'new';
 
-  const rankOpts = [['','—'],['1','1'],['2','2'],['3','3'],['4','4']]
-    .map(([v,l]) => `<option value="${v}"${t.rank===v?' selected':''}>${l}</option>`).join('');
-
+  const statOpts = STATUSES.map(v =>
+    `<option value="${v}"${t.status===v?' selected':''}>${v||'— Status —'}</option>`).join('');
   const fnOpts = FNS.map(v =>
-    `<option value="${v}"${t.owFn===v?' selected':''}>${v||'— Select —'}</option>`).join('');
-
-  const ownerOpts = (sel) => OWNERS.map(v =>
+    `<option value="${v}"${t.owFn===v?' selected':''}>${v||'— Function —'}</option>`).join('');
+  const priOpts = PRIS.map(v =>
+    `<option value="${v}"${t.priority===v?' selected':''}>${v||'— Priority —'}</option>`).join('');
+  const ownerOpts = sel => OWNERS.map(v =>
     `<option value="${v}"${v===sel?' selected':''}>${v||'— None —'}</option>`).join('');
 
-  const dueCls = dueDateClass(t.dueDate);
-
-  const tatHtml = tatDisplay(t.tat);
+  const dueCls  = dueDateClass(t.dueDate);
 
   return `<tr data-ri="${ri}">
-    <td class="rnum ctr">${t.num || display}</td>
-    <td class="ctr">
-      <select class="rank-sel" onchange="onRankChange(this)" data-field="rank">
-        ${rankOpts}
+    <td class="rnum ctr">${t.num||display}</td>
+    <td>
+      <select class="pill-sel ${STAT_CLS[t.status]||'s-ns'}"
+        data-field="status" onchange="onPillChange(this,'status')">
+        ${statOpts}
       </select>
     </td>
     <td>
-      <select class="fn-sel" onchange="onSelectChange(this)" data-field="owFn">
+      <select class="fn-sel" data-field="owFn" onchange="onSelectChange(this)">
         ${fnOpts}
       </select>
     </td>
     <td>
       <input type="text" class="task-inp" placeholder="Enter task…"
         value="${esc(t.task)}" data-field="task"
-        oninput="debounce(this)" onblur="onTextBlur(this)">
+        oninput="debounce(this)" onblur="onBlur(this)">
     </td>
     <td>
       <div class="own-wrap">
         <span class="own-dot ${dotCls(t.priOwner)}">${initOf(t.priOwner)}</span>
-        <select class="own-sel" onchange="onSelectChange(this);updateDot(this.closest('.own-wrap'))" data-field="priOwner">
+        <select class="own-sel" data-field="priOwner"
+          onchange="onSelectChange(this);updateDot(this.closest('.own-wrap'))">
           ${ownerOpts(t.priOwner)}
         </select>
       </div>
@@ -584,36 +560,48 @@ function buildRow(t, display) {
     <td>
       <div class="own-wrap">
         <span class="own-dot ${dotCls(t.secOwner)}">${initOf(t.secOwner)}</span>
-        <select class="own-sel" onchange="onSelectChange(this);updateDot(this.closest('.own-wrap'))" data-field="secOwner">
+        <select class="own-sel" data-field="secOwner"
+          onchange="onSelectChange(this);updateDot(this.closest('.own-wrap'))">
           ${ownerOpts(t.secOwner)}
         </select>
       </div>
     </td>
     <td class="ctr">
       <input type="date" class="date-inp" value="${t.startDate}"
-        data-field="startDate"
-        onchange="onDateChange(this)">
+        data-field="startDate" onchange="onDateChange(this)">
     </td>
     <td class="ctr">
       <input type="date" class="date-inp ${dueCls}" value="${t.dueDate}"
-        data-field="dueDate"
-        onchange="onDateChange(this)">
+        data-field="dueDate" onchange="onDateChange(this)">
     </td>
     <td class="ctr">
       <input type="date" class="date-inp" value="${t.endDate}"
-        data-field="endDate"
-        onchange="onDateChange(this)">
+        data-field="endDate" onchange="onDateChange(this)">
     </td>
-    <td class="ctr" data-tat-cell="1">${tatHtml}</td>
+    <td class="ctr" data-tat-cell="1">${tatDisplay(t.tat)}</td>
     <td>
       <input type="text" class="brief-inp" placeholder="Add details…"
         value="${esc(t.brief)}" data-field="brief"
-        oninput="debounce(this)" onblur="onTextBlur(this)">
+        oninput="debounce(this)" onblur="onBlur(this)">
     </td>
     <td class="ctr">
       <input type="number" class="vol-inp" min="0" placeholder="—"
         value="${t.volume||''}" data-field="volume"
-        onchange="onSelectChange(this)" onblur="onTextBlur(this)">
+        onchange="onSelectChange(this)" onblur="onBlur(this)">
+    </td>
+    <td>
+      <div class="blocker-wrap">
+        <input type="text" class="blocker-inp" placeholder="Any blocker…"
+          value="${esc(t.blocker)}" data-field="blocker"
+          oninput="debounce(this)" onblur="onBlur(this)">
+        <span class="b-ic">🚫</span>
+      </div>
+    </td>
+    <td>
+      <select class="pill-sel ${PRI_CLS[t.priority]||'p-none'}"
+        data-field="priority" onchange="onPillChange(this,'priority')">
+        ${priOpts}
+      </select>
     </td>
     <td>
       <div class="act-btns">
@@ -624,204 +612,165 @@ function buildRow(t, display) {
 }
 
 // ── Change handlers ──────────────────────────────────────────────
-
-function onRankChange(sel) {
-  updateRankStyle(sel);
+function onPillChange(sel, field) {
+  if (field === 'status')   updateStatusStyle(sel);
+  if (field === 'priority') updatePriStyle(sel);
   saveRow(sel.closest('tr'));
+  if (field === 'status') updateStats(allTasks); // live strip update
 }
 
 function onSelectChange(el) {
-  if (el.classList.contains('own-sel')) updateDot(el.closest('.own-wrap'));
   saveRow(el.closest('tr'));
 }
 
 function onDateChange(el) {
-  const tr = el.closest('tr');
-  // update due date style
-  const dueEl = tr.querySelector('[data-field="dueDate"]');
-  if (dueEl) {
-    dueEl.className = 'date-inp ' + dueDateClass(dueEl.value);
-  }
-  // live TAT preview
-  const start = tr.querySelector('[data-field="startDate"]').value;
-  const end   = tr.querySelector('[data-field="endDate"]').value;
-  const tatCell = tr.querySelector('[data-tat-cell]');
-  if (tatCell) tatCell.innerHTML = tatDisplay(calcTAT(start, end));
+  const tr  = el.closest('tr');
+  const due = tr.querySelector('[data-field="dueDate"]');
+  if (due) due.className = 'date-inp ' + dueDateClass(due.value);
+  const s   = tr.querySelector('[data-field="startDate"]').value;
+  const e   = tr.querySelector('[data-field="endDate"]').value;
+  const tc  = tr.querySelector('[data-tat-cell]');
+  if (tc) tc.innerHTML = tatDisplay(calcTAT(s, e));
   saveRow(tr);
 }
 
 function debounce(el) {
-  const tr = el.closest('tr');
-  const key = tr.dataset.ri;
+  const key = el.closest('tr').dataset.ri;
   clearTimeout(saveTimers[key]);
-  saveTimers[key] = setTimeout(() => saveRow(tr), 800);
+  saveTimers[key] = setTimeout(() => saveRow(el.closest('tr')), 800);
 }
 
-function onTextBlur(el) {
+function onBlur(el) {
   const tr = el.closest('tr');
-  const key = tr.dataset.ri;
-  clearTimeout(saveTimers[key]);
+  clearTimeout(saveTimers[tr.dataset.ri]);
   saveRow(tr);
 }
 
 // ── Save row ─────────────────────────────────────────────────────
 function saveRow(tr) {
-  const ri = tr.dataset.ri;
+  const ri  = tr.dataset.ri;
   const get = f => (tr.querySelector(`[data-field="${f}"]`)||{}).value || '';
-
   const task = get('task');
-  if (!task.trim()) return;  // don't save blank task
+  if (!task.trim()) return;
 
   const payload = {
-    rowIndex  : (ri === 'new' || ri == null) ? null : parseInt(ri),
-    rank      : get('rank'),
-    owFn      : get('owFn'),
-    task      : task,
-    priOwner  : get('priOwner'),
-    secOwner  : get('secOwner'),
-    startDate : get('startDate'),
-    dueDate   : get('dueDate'),
-    endDate   : get('endDate'),
-    brief     : get('brief'),
-    volume    : get('volume')
+    rowIndex : (ri === 'new' || !ri) ? null : parseInt(ri),
+    status   : get('status'),
+    owFn     : get('owFn'),
+    task,
+    priOwner : get('priOwner'),
+    secOwner : get('secOwner'),
+    startDate: get('startDate'),
+    dueDate  : get('dueDate'),
+    endDate  : get('endDate'),
+    brief    : get('brief'),
+    volume   : get('volume'),
+    blocker  : get('blocker'),
+    priority : get('priority')
   };
 
   showSaving(true);
   google.script.run
     .withSuccessHandler(res => {
       showSaving(false);
-      if (res && res.error) { toast('Save failed: '+res.error, 'err'); return; }
-      // if new row — update data-ri so subsequent saves update rather than insert
+      if (res && res.error) { toast('Save failed: '+res.error,'err'); return; }
       if (!payload.rowIndex && res.rowIndex) {
         tr.dataset.ri = res.rowIndex;
-        // also update the allTasks array so stats refresh
-        const num = parseInt(tr.querySelector('.rnum').textContent)||0;
-        allTasks.push({rowIndex:res.rowIndex, num, ...payload, tat: calcTAT(payload.startDate, payload.endDate)});
+        allTasks.push({rowIndex:res.rowIndex, ...payload});
         updateStats(allTasks);
       }
-      toast('Saved ✓', 'ok');
+      toast('Saved ✓','ok');
     })
-    .withFailureHandler(e => {
-      showSaving(false);
-      toast('Error: '+e.message,'err');
-    })
+    .withFailureHandler(e => { showSaving(false); toast('Error: '+e.message,'err'); })
     .saveTask(payload);
 }
 
-// ── Add blank row ─────────────────────────────────────────────────
+// ── Add row ──────────────────────────────────────────────────────
 function addRow() {
-  const blank = {
-    rowIndex:null, num:'', rank:'', owFn:'', task:'',
-    priOwner:'', secOwner:'', startDate:'', dueDate:'',
-    endDate:'', tat:'', brief:'', volume:''
-  };
+  const blank = {rowIndex:null,num:'',status:'',owFn:'',task:'',
+    priOwner:'',secOwner:'',startDate:'',dueDate:'',endDate:'',
+    tat:'',brief:'',volume:'',blocker:'',priority:''};
   const tbody = document.getElementById('tbody');
-
-  // Remove empty-state row if present
   if (tbody.querySelector('.empty')) tbody.innerHTML = '';
-
-  const display = tbody.querySelectorAll('tr').length + 1;
-  const newHtml = buildRow(blank, display);
-  const newTr   = document.createElement('tbody');
-  newTr.innerHTML = newHtml;
-  const row = newTr.firstElementChild;
+  const n = tbody.querySelectorAll('tr').length + 1;
+  const tmp = document.createElement('tbody');
+  tmp.innerHTML = buildRow(blank, n);
+  const row = tmp.firstElementChild;
   row.dataset.ri = 'new';
   tbody.appendChild(row);
-
-  // style new rank selects
-  row.querySelectorAll('.rank-sel').forEach(updateRankStyle);
+  row.querySelectorAll('.pill-sel[data-field="status"]').forEach(updateStatusStyle);
+  row.querySelectorAll('.pill-sel[data-field="priority"]').forEach(updatePriStyle);
   row.querySelectorAll('.own-wrap').forEach(w => updateDot(w));
-
-  // focus the task input
   row.querySelector('.task-inp').focus();
-  row.scrollIntoView({behavior:'smooth', block:'center'});
+  row.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
 // ── Delete ───────────────────────────────────────────────────────
 function confirmDel(btn) {
   const tr = btn.closest('tr');
-  const cdrop = document.getElementById('cdrop');
-  cdrop.classList.add('open');
-  document.getElementById('cdel-btn').onclick = function() {
-    cdrop.classList.remove('open');
-    deleteRow(tr);
+  document.getElementById('cdrop').classList.add('open');
+  document.getElementById('cdel-btn').onclick = () => {
+    document.getElementById('cdrop').classList.remove('open');
+    const ri = parseInt(tr.dataset.ri);
+    if (!ri || isNaN(ri)) { tr.remove(); return; }
+    showSaving(true);
+    google.script.run
+      .withSuccessHandler(res => {
+        showSaving(false);
+        if (res && res.error) { toast('Delete failed: '+res.error,'err'); return; }
+        tr.remove();
+        allTasks = allTasks.filter(t => t.rowIndex !== ri);
+        updateStats(allTasks);
+        renumberDisplay();
+        toast('Deleted.','ok');
+      })
+      .withFailureHandler(e => { showSaving(false); toast('Error: '+e.message,'err'); })
+      .deleteTask(ri);
   };
 }
 
-function closeCdrop() {
-  document.getElementById('cdrop').classList.remove('open');
-}
-
-function deleteRow(tr) {
-  const ri = parseInt(tr.dataset.ri);
-  if (!ri || isNaN(ri)) {
-    // Was never saved — just remove from DOM
-    tr.remove();
-    return;
-  }
-  showSaving(true);
-  google.script.run
-    .withSuccessHandler(res => {
-      showSaving(false);
-      if (res && res.error) { toast('Delete failed: '+res.error,'err'); return; }
-      tr.remove();
-      allTasks = allTasks.filter(t => t.rowIndex !== ri);
-      updateStats(allTasks);
-      renumberDisplay();
-      toast('Deleted.','ok');
-    })
-    .withFailureHandler(e => {
-      showSaving(false);
-      toast('Error: '+e.message,'err');
-    })
-    .deleteTask(ri);
-}
+function closeCdrop() { document.getElementById('cdrop').classList.remove('open'); }
 
 function renumberDisplay() {
   document.querySelectorAll('#tbody .rnum').forEach((el,i) => el.textContent = i+1);
 }
 
-// ── Helpers ──────────────────────────────────────────────────────
+// ── Style helpers ────────────────────────────────────────────────
+function updateStatusStyle(sel) {
+  const cls = STAT_CLS[sel.value] || 's-ns';
+  sel.className = 'pill-sel ' + cls;
+}
 
-function updateRankStyle(sel) {
-  const v = sel.value || '0';
-  sel.className = 'rank-sel r' + v;
+function updatePriStyle(sel) {
+  const cls = PRI_CLS[sel.value] || 'p-none';
+  sel.className = 'pill-sel ' + cls;
 }
 
 function updateDot(wrap) {
-  const sel  = wrap.querySelector('.own-sel');
-  const dot  = wrap.querySelector('.own-dot');
+  const sel = wrap.querySelector('.own-sel');
+  const dot = wrap.querySelector('.own-dot');
   if (!sel || !dot) return;
-  const name = sel.value;
-  dot.textContent  = initOf(name);
-  dot.className    = 'own-dot ' + dotCls(name);
+  dot.textContent = initOf(sel.value);
+  dot.className   = 'own-dot ' + dotCls(sel.value);
 }
 
-function initOf(name) {
-  return OWNER_INIT[name] || (name ? name[0].toUpperCase() : '');
-}
-
-function dotCls(name) {
-  return OWNER_DOT[name] || 'dot-X';
-}
+function initOf(n){ return OWN_INIT[n] || (n ? n[0].toUpperCase() : ''); }
+function dotCls(n){ return OWN_DOT[n]  || 'dot-X'; }
 
 function dueDateClass(d) {
   if (!d) return '';
   const today = new Date(); today.setHours(0,0,0,0);
-  const due   = new Date(d);
+  const due = new Date(d);
   if (due < today) return 'overdue';
-  const diff  = Math.ceil((due-today)/86400000);
-  if (diff <= 3) return 'warning';
+  if (Math.ceil((due-today)/86400000) <= 3) return 'warning';
   return '';
 }
 
-function calcTAT(start, end) {
-  if (!start) return '';
-  const s = new Date(start);
-  const e = end ? new Date(end) : new Date();
-  const d = Math.ceil((e - s) / 86400000);
-  if (d < 0) return '0';
-  return end ? String(d) : (d + '+ (running)');
+function calcTAT(s, e) {
+  if (!s) return '';
+  const days = Math.ceil((( e ? new Date(e) : new Date()) - new Date(s)) / 86400000);
+  if (days < 0) return '0';
+  return e ? String(days) : (days + '+ (running)');
 }
 
 function tatDisplay(tat) {
@@ -837,25 +786,21 @@ function esc(s) {
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function showSaving(on) {
-  document.getElementById('savingDot').classList.toggle('show', on);
-}
-
-function show(id, on) {
-  document.getElementById(id).style.display = on ? 'flex' : 'none';
-}
-
+function set(id, val) { document.getElementById(id).textContent = val; }
+function show(id, on) { document.getElementById(id).style.display = on ? 'flex' : 'none'; }
+function showSaving(on) { document.getElementById('savingDot').classList.toggle('show', on); }
 function toast(msg, type) {
   const el = document.createElement('div');
-  el.className = 'toast ' + (type||'ok');
+  el.className = 'toast '+(type||'ok');
   el.innerHTML = (type==='err'?'❌':'✅') + ' ' + esc(msg);
   document.getElementById('toast-box').appendChild(el);
   setTimeout(() => el.remove(), 3200);
 }
 
-// close confirm on backdrop click / ESC
-document.getElementById('cdrop').addEventListener('click', e => { if(e.target===e.currentTarget) closeCdrop(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeCdrop(); });
+document.getElementById('cdrop').addEventListener('click',
+  e => { if (e.target === e.currentTarget) closeCdrop(); });
+document.addEventListener('keydown',
+  e => { if (e.key === 'Escape') closeCdrop(); });
 </script>
 </body>
 </html>
