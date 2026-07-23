@@ -4,6 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Onboarding Team - Daily Task Updates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ── Variables ───────────────────────────────────────────── */
 :root{
@@ -23,8 +26,10 @@
 
 /* ── Reset ───────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
-  background:var(--bg);color:var(--text);font-size:13px;min-height:100vh}
+body{font-family:'Poppins','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;
+  font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility}
 
 /* ── Header ─────────────────────────────────────────────── */
 .app-bar{
@@ -36,10 +41,12 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 .brand-logo{display:flex;align-items:center;gap:8px}
 .brand-logo svg{flex-shrink:0}
 .brand-wordmark{display:flex;flex-direction:column;line-height:1}
-.brand-wordmark .bw-name{font-size:15px;font-weight:800;color:var(--brand);letter-spacing:-.3px}
-.brand-wordmark .bw-sub{font-size:9.5px;color:var(--faint);letter-spacing:.3px;margin-top:1px}
+.brand-wordmark .bw-name{font-size:16px;font-weight:700;color:var(--brand);
+  letter-spacing:-.5px;line-height:1}
+.brand-wordmark .bw-sub{font-size:9px;font-weight:500;color:var(--faint);
+  letter-spacing:.2px;margin-top:2px}
 .brand-div{width:1px;height:28px;background:var(--border);margin:0 14px}
-.brand-section{font-size:11px;font-weight:700;letter-spacing:1.4px;
+.brand-section{font-size:11px;font-weight:600;letter-spacing:1.6px;
   text-transform:uppercase;color:var(--muted)}
 .hdr-right{display:flex;align-items:center;gap:12px}
 .live-badge{display:flex;align-items:center;gap:6px;
@@ -65,12 +72,13 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
   transition:box-shadow .18s}
 .met-card:hover{box-shadow:var(--shadow-md)}
 .met-card.dark{background:#0f172a;border-color:#1e293b}
-.met-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;
-  letter-spacing:1px;color:var(--faint)}
+.met-lbl{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:var(--faint)}
 .met-card.dark .met-lbl{color:#64748b}
-.met-val{font-size:30px;font-weight:800;line-height:1;margin:4px 0;color:var(--text)}
+.met-val{font-size:32px;font-weight:800;line-height:1;margin:5px 0 3px;color:var(--text);
+  letter-spacing:-1.2px;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .met-card.dark .met-val{color:#f8fafc}
-.met-sub{font-size:11px;color:var(--muted)}
+.met-sub{font-size:11px;font-weight:500;color:var(--muted)}
 .met-card.dark .met-sub{color:#475569}
 .met-icon{font-size:16px;margin-bottom:2px}
 .met-done .met-val{color:#059669}
@@ -104,9 +112,10 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 .mc-stat-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;
   padding:10px 8px;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:3px;text-align:center}
-.mc-stat-val{font-size:22px;font-weight:800;color:var(--text);line-height:1}
-.mc-stat-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-transform:uppercase;
-  letter-spacing:.6px;white-space:nowrap}
+.mc-stat-val{font-size:23px;font-weight:800;color:var(--text);line-height:1;
+  letter-spacing:-.8px;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.mc-stat-lbl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.5px;white-space:nowrap}
 .mc-stat-box.done .mc-stat-val{color:#166534}
 .mc-stat-box.done{background:#dcfce7;border-color:#86efac}
 .mc-stat-box.prog .mc-stat-val{color:#92400e}
@@ -164,8 +173,8 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
   border-radius:var(--r);overflow:hidden;min-width:1600px;
   box-shadow:var(--shadow-md)}
 .tbl thead tr{background:#0f172a}
-.tbl thead th{color:#64748b;font-size:9.5px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.9px;padding:14px 10px;
+.tbl thead th{color:#94a3b8;font-size:9.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.7px;padding:14px 10px;
   white-space:nowrap;text-align:left;border-bottom:1px solid #1e293b}
 .tbl thead th.ctr{text-align:center}
 .tbl tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
@@ -182,7 +191,8 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 .c-impact{min-width:200px}
 .c-vol{width:72px;text-align:center}.c-blocker{min-width:160px}
 .c-pri{width:110px}.c-act{width:52px;text-align:center}
-.rnum{font-size:11px;font-weight:700;color:var(--faint);text-align:center}
+.rnum{font-size:11px;font-weight:700;color:var(--faint);text-align:center;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 
 /* ── Pill select ─────────────────────────────────────────── */
 .pill-sel{
@@ -277,6 +287,7 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 .vol-inp{width:65px;background:#f8fafc;border:1.5px solid #e2e8f0;
   border-radius:20px;padding:5px 8px;font-size:12px;font-weight:600;
   color:#334155;font-family:inherit;outline:none;text-align:center;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
   transition:border-color .15s}
 .vol-inp:hover{border-color:var(--brand-lt)}
 .vol-inp:focus{border-color:var(--brand-lt);background:#fff;
@@ -284,7 +295,8 @@ body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
 
 /* ── TAT pills ───────────────────────────────────────────── */
 .tat-pill{display:inline-block;border-radius:20px;padding:3px 10px;
-  font-size:11px;font-weight:600;white-space:nowrap}
+  font-size:11px;font-weight:600;white-space:nowrap;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .tat-done{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
 .tat-run {background:#fdf4ff;color:#9333ea;border:1px solid #e9d5ff}
 .tat-none{color:#d1d5db;font-size:11px}
