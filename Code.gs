@@ -36,7 +36,7 @@ const HEADERS = [
 // ── Entry point ──────────────────────────────────────────────────────────────
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('Index')
-    .setTitle('Onboarding Team — Task Tracker')
+    .setTitle('Onboarding Team - Daily Task Updates')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
